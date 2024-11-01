@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="BottomNavItemTextAppearance">
+        <item name="android:lineSpacingExtra">18dp</item> <!-- Thay đổi khoảng cách dòng -->
+        <item name="android:paddingTop">8dp</item> <!-- Padding trên -->
+    </style>
+</resources>

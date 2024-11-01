@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#4682fa"
+    android:fitsSystemWindows="true"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/g1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.15" />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/g2"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_percent="0.8"
+        />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/g3"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_percent="0.9"
+        />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/g1">
+    <ImageView
+        android:id="@+id/term_img"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:src="@drawable/icon_term"
+        app:layout_constraintWidth_percent="0.2"
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+       app:layout_constraintRight_toLeftOf="@id/term_img"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+        <TextView
+            android:id="@+id/term_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Điều khoản và điều kiện"
+            app:layout_constraintHorizontal_bias="0.07"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="24sp"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            android:textAlignment="viewStart"
+
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/term_img"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/term_text"
+            app:layout_constraintHorizontal_bias="0.42"
+            android:textColor="#e8e3e3"
+            android:textSize="17dp"
+            android:text="Ngày sửa đổi: 01/01/2023"
+
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <ScrollView
+        android:id="@+id/Srv1"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintWidth_percent="0.8"
+        app:layout_constraintHeight_percent="0.65"
+        app:layout_constraintTop_toBottomOf="@id/g1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/g2">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tvContent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:letterSpacing="0.1"
+                android:lineHeight="26sp"
+                android:text="Điều Khoản Sử Dụng này bao gồm các phần sau đây:\n
+1. Quyền được phép sử dụng nền tảng DSI và dịch vụ có hiệu lực cho đến khi bị chấm dứt. Quyền được phép sử dụng sẽ bị chấm dứt theo Điều Khoản Dịch Vụ này hoặc theo hợp đồng Người Sử Dụng vi phạm bất cứ điều khoản hoặc điều kiện nào được quy định tại Điều Khoản Dịch Vụ này. Trong trường hợp đó, DSI có thể chấm dứt việc sử dụng của Người Sử Dụng và không có bất kỳ thông báo nào.\n
+2. Người Sử Dụng không được phép:\n
+(a) Tải lên, đăng tải hoặc bằng cách khác công khai bất kỳ Nội Dung nào bị pháp luật, cổ hủ, đe dọa, lăng mạ, lừa đảo, bôi nhọ, khiêu dâm, bôi nhọ, xâm phạm quyền riêng tư của người khác, gây căm phẫn, hoặc phân biệt chủng tộc, dân tộc hoặc bất kỳ nội dung không đúng đắn nào khác;\n\n
+(b) Vi phạm pháp luật, quyền lợi của bên thứ ba hoặc Chính Sách Cấm/Hạn Chế Sản Phẩm của DSI;\n
+(c) Đăng tải, truyền tải, hoặc bằng bất kỳ hình thức nào khác liên kết bất kỳ Nội dung nào có sự vi phạm hoặc xúc phạm quyền nhân thân hoặc sử dụng Dịch vụ gây hại cho người chưa thành niên dưới bất kỳ hình thức nào;\n
+(d) Sử dụng Dịch vụ để tham gia bất kỳ Nội Dung đe doạ, tổ chức hoặc hành động tổ chức hoặc, hoặc bằng cách nào khác xuyên tạc cá nhân hoặc tổ chức;\n
+(e) Giả mạo các tiêu đề hoặc bằng cách khác nguỵ tạo các định dạng nhằm che giấu nguồn gốc của bất kỳ Nội Dung nào.\n
+3. Người Sử Dụng phải đảm bảo rằng mọi thông tin cung cấp cho DSI là chính xác, đầy đủ và cập nhật. Bất kỳ thông tin sai lệch nào có thể dẫn đến việc chấm dứt quyền sử dụng Dịch vụ.\n
+4. DSI có quyền sửa đổi, bổ sung hoặc cập nhật các Điều Khoản Sử Dụng này mà không cần thông báo trước. Các sửa đổi sẽ có hiệu lực ngay khi được công bố trên nền tảng của DSI.\n
+5. Người Sử Dụng không được sử dụng Dịch Vụ với mục đích thương mại mà không có sự đồng ý bằng văn bản của DSI.\n\n
+6. DSI không chịu trách nhiệm về bất kỳ thiệt hại trực tiếp, gián tiếp, ngẫu nhiên, hoặc hệ quả nào phát sinh từ việc sử dụng hoặc không thể sử dụng Dịch Vụ.\n
+7. Bất kỳ tranh chấp nào phát sinh từ việc sử dụng Dịch Vụ sẽ được giải quyết theo quy định của pháp luật hiện hành tại địa phương nơi DSI đăng ký hoạt động.\n
+8. Người Sử Dụng đồng ý không thực hiện bất kỳ hành động nào nhằm phá hoại, can thiệp hoặc làm gián đoạn các tính năng bảo mật hoặc hoạt động bình thường của nền tảng DSI."
+                android:textColor="#e8e3e3"
+                android:textSize="13sp"
+                android:textStyle="normal" />
+        </RelativeLayout>
+    </ScrollView>
+    <CheckBox
+        android:id="@+id/checkBoxbtn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Tôi đồng ý với DSI Fashion Điều khoản sử dụng và dữ liệu cá nhân của tôi được xử lý theo DSI"
+        app:layout_constraintWidth_percent="0.8"
+        app:layout_constraintTop_toBottomOf="@+id/g2"
+        app:layout_constraintBottom_toTopOf="@id/g3"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:button="@drawable/radio_button"
+        android:includeFontPadding="false"
+        android:paddingLeft="10dp"
+        android:textSize="13sp"
+        android:lineHeight="21sp"
+        android:textColor="#e8e3e3"
+        app:layout_constraintRight_toRightOf="parent"
+        />
+    <Button
+        android:id="@+id/btnterm_cancel"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        app:layout_constraintWidth_percent="0.3"
+        android:textAlignment="center"
+        android:background="@drawable/button_term"
+        app:layout_constraintRight_toLeftOf="@id/btnterm_Oke"
+        app:layout_constraintTop_toBottomOf="@id/g3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:text="Huỷ bỏ"
+
+        />
+    <Button
+        android:id="@+id/btnterm_Oke"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        app:layout_constraintWidth_percent="0.3"
+        android:background="@drawable/button_term"
+        app:layout_constraintTop_toBottomOf="@id/g3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:backgroundTint="@color/white"
+        app:layout_constraintLeft_toRightOf="@+id/btnterm_cancel"
+        app:layout_constraintRight_toRightOf="parent"
+        android:textAllCaps="false"
+        android:textColor="#4682fa"
+        android:text="Tiếp tục"
+
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>
