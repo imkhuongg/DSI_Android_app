@@ -1,5 +1,6 @@
 package com.example.dsidemo.helpers;
 
+import android.content.Intent;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -43,4 +44,5 @@ public class helper extends AppCompatActivity {
             hideSystemUI(getWindow().getDecorView());
         }
     }
+
 }

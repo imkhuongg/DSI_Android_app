@@ -8,20 +8,36 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.dsidemo.R;
+import com.example.dsidemo.helpers.APILinkHelper;
+import com.example.dsidemo.helpers.StringResourceHelper;
 import com.example.dsidemo.helpers.helper;
 import com.example.dsidemo.helpers.validation.LoginValidationHelper;
+import com.example.dsidemo.utils.MySingleton;
+import com.example.dsidemo.views.MainScreen.MainScreen;
 import com.example.dsidemo.views.termActivity;
 import com.google.android.material.textfield.TextInputLayout;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
 
 
 public class LoginActivity extends AppCompatActivity {
     Intent term;
+
+    private RequestQueue requestQueue;
 
     private SharedPreferences preferences;
     private LoginValidationHelper loginValidationHelper;
@@ -32,8 +48,9 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.login_layout);
+
+        requestQueue = MySingleton.getInstance(LoginActivity.this).getRequestQueue();
 
         TextView NextBtn = findViewById(R.id.btnNext);
         TextView help, SignUp, fogot ;
@@ -70,6 +87,8 @@ public class LoginActivity extends AppCompatActivity {
         passwordField.addTextChangedListener(loginValidationHelper);
 
 
+        processLogin();
+
         NextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -82,10 +101,69 @@ public class LoginActivity extends AppCompatActivity {
         SignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent signUp = new Intent(LoginActivity.this , SignUpAvtivity.class);
-                startActivity(signUp);
+               gotoRegister();
             }
         });
+    }
+
+    public void processLogin(){
+        loginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                authenticateUser(loginField.getText().toString(), passwordField.getText().toString());
+            }
+        });
+    }
+
+    public void gotoRegister(){
+        Intent intent = new Intent(LoginActivity.this, SignUpAvtivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    public void gotoMainActivityAuthenticated(){
+        Intent intent = new Intent(LoginActivity.this, MainScreen.class);
+        startActivity(intent);
+        Toast.makeText(this, "LoginSuccessfull", Toast.LENGTH_SHORT).show();
+        finish();
+    }
+
+    public void authenticateUser(String email , String password){
+        HashMap<String , String> params = new HashMap<>();
+        params.put("email" , email);
+        params.put("password" , password);
+
+        JsonObjectRequest request =
+                new JsonObjectRequest(Request.Method.POST, APILinkHelper.authUserApiUri(), new JSONObject(params), new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        preferences = getSharedPreferences(StringResourceHelper.getUserDetailPrefName(), MODE_PRIVATE);
+                        SharedPreferences.Editor editor = preferences.edit();
+                        try{
+                            editor.putInt("user_id" , response.getInt("id"));
+                            editor.putString("first_name" , response.getString("firstname"));
+                            editor.putString("last_name" , response.getString("lastname"));
+                            editor.putString("email" , response.getString("username"));
+                            editor.putString("token" , response.getString("token"));
+                            editor.putBoolean("authenticated" , true);
+
+                            editor.apply();
+
+                            gotoMainActivityAuthenticated();
+                        }catch (JSONException e){
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                        Toast.makeText(LoginActivity.this, "failed to login", Toast.LENGTH_SHORT).show();
+
+                    }
+        });
+
+        requestQueue.add(request);
     }
 
 }
