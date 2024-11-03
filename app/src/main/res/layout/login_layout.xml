@@ -90,6 +90,7 @@
             android:id="@+id/UsernameTxt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:boxBackgroundColor="@color/white"
             app:layout_constraintTop_toBottomOf="@id/textView"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -129,6 +130,7 @@
             app:layout_constraintBottom_toTopOf="@id/textView3"
             app:layout_constraintTop_toBottomOf="@id/textView2"
             app:layout_constraintLeft_toLeftOf="parent"
+            app:boxBackgroundColor="@color/white"
             app:layout_constraintRight_toRightOf="parent">
             <EditText
                 android:id="@+id/passtxtContent"

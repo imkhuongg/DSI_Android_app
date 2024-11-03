@@ -31,7 +31,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/fragment_container"
         app:itemTextAppearance="@style/BottomNavItemTextAppearance"
-
+        android:layout_alignParentBottom="true"
         app:menu="@menu/bottomsheet_nav_menu" />
 
 

@@ -1,6 +1,6 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- Shadow (màu xám) -->
-    <item android:right="7dp" android:bottom="7dp">
+    <item android:right="15dp" android:bottom="15dp">
         <shape android:shape="rectangle">
             <solid android:color="#B3B3B3" /> <!-- Màu xám cho shadow -->
             <corners android:radius="20dp" />  <!-- Bo tròn góc nếu cần -->

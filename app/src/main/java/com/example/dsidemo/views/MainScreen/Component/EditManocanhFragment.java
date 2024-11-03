@@ -1,6 +1,5 @@
 package com.example.dsidemo.views.MainScreen.Component;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,12 +13,14 @@ import androidx.fragment.app.Fragment;
 
 import com.example.dsidemo.R;
 import com.example.dsidemo.helpers.helper;
-import com.example.dsidemo.views.profiles.ProfileActivity;
+import com.example.dsidemo.views.MainScreen.MainScreen;
+import com.example.dsidemo.views.profiles.UserPorfolio;
 
 public class EditManocanhFragment extends Fragment {
 
     private ImageView porfolio, chon_vay_ngan, chon_dang,chon_toc,chon_vay_dai,chon_ao,chon_quan,chon_giay,chon_kinh,chon_tui,chon_khuyen_tai;
     private Button navModel;
+    MainScreen mainScreen;
 
     @Nullable
     @Override
@@ -60,14 +61,13 @@ public class EditManocanhFragment extends Fragment {
         porfolio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                gotoPorfolio();
+                UserPorfolio userPorfolio = new UserPorfolio();
+                if (getActivity() instanceof MainScreen) {
+                    ((MainScreen) getActivity()).replaceFragment(userPorfolio);
+
+                }
             }
         });
-    }
-
-    private void gotoPorfolio(){
-        Intent intent = new Intent(getActivity(), ProfileActivity.class);
-        startActivity(intent);
     }
 
 }

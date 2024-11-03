@@ -209,16 +209,16 @@
             app:layout_constraintTop_toBottomOf="@id/lname_label"
             app:layout_constraintBottom_toTopOf="@+id/button"
             />
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/button"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-
+            android:layout_height="0dp"
+            app:layout_constraintHeight_percent="0.15"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
-            android:background="@drawable/button_login"
             android:backgroundTint="#4682fa"
             android:text="Đăng ký ngay"
+            app:cornerRadius="10dp"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textStyle="bold"

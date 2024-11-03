@@ -9,6 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.dsidemo.views.MainScreen.Component.CartFragment;
 import com.example.dsidemo.views.MainScreen.Component.EditManocanhFragment;
@@ -35,7 +37,8 @@ public class MainScreen extends AppCompatActivity {
         bottomNavigationView.setOnItemSelectedListener(navListener);
 
         // Hiển thị fragment đầu tiên
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new EditManocanhFragment()).commit();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, new EditManocanhFragment()).commit();
     }
 
     private BottomNavigationView.OnItemSelectedListener navListener = new BottomNavigationView.OnItemSelectedListener() {
@@ -59,10 +62,21 @@ public class MainScreen extends AppCompatActivity {
             }
 
             // Thay thế fragment đã chọn
-            if (selectedFragment != null) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
+            Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+            if (selectedFragment != null && (currentFragment == null || !selectedFragment.getClass().equals(currentFragment.getClass()))) {
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, selectedFragment)
+                        .commit();
             }
             return true;
         }
     };
+    public void replaceFragment(Fragment fragment) {
+        getSupportFragmentManager().beginTransaction()
+                .setCustomAnimations(R.anim.slide_in_up, R.anim.slide_out_down, R.anim.slide_in_up, R.anim.slide_out_down) // Animation chuyển đổi
+                .replace(R.id.fragment_container, fragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
 }
