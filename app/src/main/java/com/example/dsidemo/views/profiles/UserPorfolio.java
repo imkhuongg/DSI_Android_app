@@ -1,25 +1,32 @@
 package com.example.dsidemo.views.profiles;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.dsidemo.R;
+import com.example.dsidemo.helpers.StringResourceHelper;
 import com.example.dsidemo.helpers.helper;
 import com.example.dsidemo.views.MainScreen.MainScreen;
+import com.example.dsidemo.views.shopManage.ShopManage;
 import com.google.android.material.button.MaterialButton;
 
 public class UserPorfolio extends Fragment {
 
     private MaterialButton btn_userInfo,btn_security,btn_payment,btn_shop_manage,btn_help;
     private ImageView settingBtn,btn_extract,btn_delivery,btn_shipping,btn_rating;
-
+    TextView nameUser;
+    private SharedPreferences preferences;
 
     @Nullable
     @Override
@@ -42,6 +49,8 @@ public class UserPorfolio extends Fragment {
         btn_delivery = view.findViewById(R.id.btn_delivery);
         btn_shipping = view.findViewById(R.id.btn_shipping);
         btn_rating = view.findViewById(R.id.btn_rating);
+        //TextView
+        nameUser = view.findViewById(R.id.txt_nameUser);
 
 
         helper.setTouchEffect(btn_userInfo);
@@ -64,5 +73,21 @@ public class UserPorfolio extends Fragment {
                 }
             }
         });
+
+        preferences= getActivity().getSharedPreferences(StringResourceHelper.getUserDetailPrefName(), Context.MODE_PRIVATE);
+        if(preferences.getBoolean("authenticated" , false)){
+            String fullNameUser = preferences.getString("last_name" , "last_name")+ " " + preferences.getString("first_name" , "first_name");
+            nameUser.setText(fullNameUser);
+        }
+        btn_shop_manage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ShopManage shopManage = new ShopManage();
+                if (getActivity() instanceof MainScreen) {
+                    ((MainScreen) getActivity()).replaceFragment(shopManage);
+                }
+            }
+        });
+
     }
 }

@@ -172,6 +172,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             android:text="Đăng nhập"
+            android:backgroundTint="@color/MainColor"
             app:layout_constraintWidth_percent="0.75"
             app:layout_constraintTop_toBottomOf="@+id/textView3"
             android:layout_below="@id/textView3"
