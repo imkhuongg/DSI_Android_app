@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.dsidemo.R;
 import com.example.dsidemo.models.product;
 
@@ -20,6 +21,11 @@ public class productListRecycleAdapter extends RecyclerView.Adapter<productListR
 
     List<product> productList;
     Context context;
+
+    public productListRecycleAdapter(List<product> productList, Context context) {
+        this.productList = productList;
+        this.context = context;
+    }
 
     public List<product> getProductList() {
         return productList;
@@ -70,9 +76,10 @@ public class productListRecycleAdapter extends RecyclerView.Adapter<productListR
     @Override
     public void onBindViewHolder(@NonNull productListRecycleAdapter.productListViewHolder holder, int position) {
         holder.nameProduct_txt.setText(productList.get(position).getName_product());
-        holder.price_txt.setText(productList.get(position).getStringPrice());
-        holder.brandName_txt.setText(productList.get(position).getName_brand());
-        holder.rate_txt.setText(productList.get(position).getRate());
+        holder.price_txt.setText("Giá bán: " + productList.get(position).getStringPrice());
+        holder.brandName_txt.setText("Thương hiệu: " +productList.get(position).getName_brand());
+        holder.rate_txt.setText("Đánh giá: "+productList.get(position).getRate());
+        Glide.with(this.context).load(productList.get(position).getThumb()).into(holder.img_product);
     }
 
     @Override

@@ -37,7 +37,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                 else
                     gotoLoginActivity();
             }
-        }, 1500);
+        }, 1000);
 
     }
 

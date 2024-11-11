@@ -8,12 +8,26 @@ public class product {
     private double price;
     private int user_id;
     private String description;
-    private String rate;
+    private double rate;
     private String name_brand;
     private String thumb;
-    private String quantity_sold;
+    private int quantity_sold;
     private LocalDateTime created_at;
     private LocalDateTime updated_at;
+
+    public product(int product_id, String name_product, double price, int user_id, String description, double rate, String name_brand, String thumb, int quantity_sold) {
+        this.product_id = product_id;
+        this.name_product = name_product;
+        this.price = price;
+        this.user_id = user_id;
+        this.description = description;
+        this.rate = rate;
+        this.name_brand = name_brand;
+        this.thumb = thumb;
+        this.quantity_sold = quantity_sold;
+    }
+
+    public product() {}
 
     public int getProduct_id() {
         return product_id;
@@ -58,11 +72,11 @@ public class product {
         this.description = description;
     }
 
-    public String getRate() {
+    public double getRate() {
         return rate;
     }
 
-    public void setRate(String rate) {
+    public void setRate(double rate) {
         this.rate = rate;
     }
 
@@ -82,11 +96,11 @@ public class product {
         this.thumb = thumb;
     }
 
-    public String getQuantity_sold() {
+    public int getQuantity_sold() {
         return quantity_sold;
     }
 
-    public void setQuantity_sold(String quantity_sold) {
+    public void setQuantity_sold(int quantity_sold) {
         this.quantity_sold = quantity_sold;
     }
 
