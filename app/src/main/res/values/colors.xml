@@ -10,4 +10,5 @@
 
     <color name="MainColor">#4682fa</color>
     <color name="lightGray">#EAECEE</color>
+    <color name="HintColor">#bfbfbd</color>
 </resources>

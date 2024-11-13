@@ -30,14 +30,17 @@
         android:id="@+id/label1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Quản lý\nbán hàng"
-        android:textColor="@color/MainColor"
-
         android:textSize="18sp"
-        android:textStyle="bold"
+
         app:layout_constraintLeft_toRightOf="@id/btn_back"
+        app:layout_constraintTop_toBottomOf="@+id/g1"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/g1" />
+
+
+        android:textColor="@color/MainColor"
+        android:textStyle="bold"
+        android:text="Quản lý\nbán hàng"
+        />
     <ImageView
         android:id="@+id/btn_porfolio"
         android:layout_width="0dp"
@@ -126,13 +129,50 @@
                 app:strokeWidth="1dp"
                 app:strokeColor="@color/MainColor"
                 app:cardCornerRadius="15dp"
-                android:clickable="true"
-                >
+                android:clickable="true">
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    >
+                    android:layout_height="match_parent">
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/g11"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_percent="0.1" />
+                    <TextView
+                        android:id="@+id/labelQuantityProduct"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
 
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintLeft_toRightOf="@id/g11"
+                        app:layout_constraintHorizontal_bias="0.01"
+                        app:layout_constraintBottom_toTopOf="@id/quantitySold"
+                        app:layout_constraintVertical_chainStyle="packed"
+                        app:layout_constraintVertical_bias="0.3"
+
+                        android:text="Đơn hàng đã bán"
+                        android:textColor="@color/MainColor"
+                        android:textSize="12sp"
+                        />
+                    <TextView
+                        android:id="@+id/quantitySold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        app:layout_constraintTop_toBottomOf="@id/labelQuantityProduct"
+                        app:layout_constraintLeft_toRightOf="@id/g11"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintHorizontal_bias="0.01"
+
+                        android:text="0"
+                        android:textSize="16sp"
+                        android:textColor="@color/MainColor"
+                        android:textStyle="bold"
+
+                        />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -156,9 +196,48 @@
                 >
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    >
+                    android:layout_height="match_parent">
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/g12"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_percent="0.1"
+                        />
+                    <TextView
+                        android:id="@+id/labelProfits"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
 
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintLeft_toRightOf="@id/g12"
+                        app:layout_constraintHorizontal_bias="0.01"
+                        app:layout_constraintBottom_toTopOf="@id/Txt_Profits"
+                        app:layout_constraintVertical_chainStyle="packed"
+                        app:layout_constraintVertical_bias="0.3"
+
+                        android:text="Doanh Thu"
+                        android:textColor="@color/MainColor"
+                        android:textSize="12sp"
+                        />
+                    <TextView
+                        android:id="@+id/Txt_Profits"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        app:layout_constraintTop_toBottomOf="@id/labelProfits"
+                        app:layout_constraintLeft_toRightOf="@id/g12"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintHorizontal_bias="0.01"
+
+                        android:text="0đ"
+                        android:textSize="16sp"
+                        android:textColor="@color/MainColor"
+                        android:textStyle="bold"
+
+                        />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -182,9 +261,47 @@
                 >
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    >
+                    android:layout_height="match_parent">
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/g13"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_percent="0.1" />
+                    <TextView
+                        android:id="@+id/labelFollower"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
 
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintLeft_toRightOf="@id/g13"
+                        app:layout_constraintHorizontal_bias="0.01"
+                        app:layout_constraintBottom_toTopOf="@id/txt_follower"
+                        app:layout_constraintVertical_chainStyle="packed"
+                        app:layout_constraintVertical_bias="0.3"
+
+                        android:text="Người theo dõi"
+                        android:textColor="@color/MainColor"
+                        android:textSize="12sp"
+                        />
+                    <TextView
+                        android:id="@+id/txt_follower"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        app:layout_constraintTop_toBottomOf="@id/labelFollower"
+                        app:layout_constraintLeft_toRightOf="@id/g13"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintHorizontal_bias="0.01"
+
+                        android:text="0"
+                        android:textSize="16sp"
+                        android:textColor="@color/MainColor"
+                        android:textStyle="bold"
+
+                        />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -207,9 +324,47 @@
                 >
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    >
+                    android:layout_height="match_parent">
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/g14"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_percent="0.1" />
+                    <TextView
+                        android:id="@+id/labelQuantityRate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
 
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintLeft_toRightOf="@id/g14"
+                        app:layout_constraintHorizontal_bias="0.01"
+                        app:layout_constraintBottom_toTopOf="@id/txt_quantityRate"
+                        app:layout_constraintVertical_chainStyle="packed"
+                        app:layout_constraintVertical_bias="0.3"
+
+                        android:text="Đánh giá"
+                        android:textColor="@color/MainColor"
+                        android:textSize="12sp"
+                        />
+                    <TextView
+                        android:id="@+id/txt_quantityRate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        app:layout_constraintTop_toBottomOf="@id/labelQuantityRate"
+                        app:layout_constraintLeft_toRightOf="@id/g14"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintHorizontal_bias="0.01"
+
+                        android:text="0"
+                        android:textSize="16sp"
+                        android:textColor="@color/MainColor"
+                        android:textStyle="bold"
+
+                        />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -232,18 +387,21 @@
         android:textColor="@color/MainColor"
         android:textStyle="bold"
         />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/listProduct"
-        android:layout_marginTop="10dp"
         android:layout_width="0dp"
-        android:padding="0dp"
-        android:clipToPadding="false"
-        app:layout_constraintWidth_percent="0.9"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:clipToPadding="false"
+        android:padding="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
 
-        app:layout_constraintTop_toBottomOf="@id/label2"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/label2"
+        app:layout_constraintWidth_percent="0.9"
+        app:layout_constraintVertical_bias="0.02 "
         />
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_btn"

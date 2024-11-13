@@ -1,7 +1,6 @@
-package com.example.dsidemo.views.profiles;
+package com.example.dsidemo.views.MainScreen.profiles;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -18,14 +17,14 @@ import com.example.dsidemo.R;
 import com.example.dsidemo.helpers.StringResourceHelper;
 import com.example.dsidemo.helpers.helper;
 import com.example.dsidemo.views.MainScreen.MainScreen;
-import com.example.dsidemo.views.shopManage.ShopManage;
+import com.example.dsidemo.views.MainScreen.shopManage.ShopManage;
 import com.google.android.material.button.MaterialButton;
 
 public class UserPorfolio extends Fragment {
 
     private MaterialButton btn_userInfo,btn_security,btn_payment,btn_shop_manage,btn_help;
-    private ImageView settingBtn,btn_extract,btn_delivery,btn_shipping,btn_rating;
-    TextView nameUser;
+    private ImageView settingBtn,btn_extract,btn_delivery,btn_shipping,btn_rating,btn_back;
+    private TextView nameUser;
     private SharedPreferences preferences;
 
     @Nullable
@@ -49,6 +48,7 @@ public class UserPorfolio extends Fragment {
         btn_delivery = view.findViewById(R.id.btn_delivery);
         btn_shipping = view.findViewById(R.id.btn_shipping);
         btn_rating = view.findViewById(R.id.btn_rating);
+        btn_back = view.findViewById(R.id.btn_back);
         //TextView
         nameUser = view.findViewById(R.id.txt_nameUser);
 
@@ -63,6 +63,8 @@ public class UserPorfolio extends Fragment {
         helper.setTouchEffect(btn_delivery);
         helper.setTouchEffect(btn_shipping);
         helper.setTouchEffect(btn_rating);
+        helper.setTouchEffect(btn_back);
+
 
         settingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,6 +88,12 @@ public class UserPorfolio extends Fragment {
                 if (getActivity() instanceof MainScreen) {
                     ((MainScreen) getActivity()).replaceFragment(shopManage);
                 }
+            }
+        });
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                requireActivity().getSupportFragmentManager().popBackStack();
             }
         });
 

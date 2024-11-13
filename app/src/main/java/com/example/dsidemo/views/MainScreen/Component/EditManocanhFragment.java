@@ -14,7 +14,7 @@ import androidx.fragment.app.Fragment;
 import com.example.dsidemo.R;
 import com.example.dsidemo.helpers.helper;
 import com.example.dsidemo.views.MainScreen.MainScreen;
-import com.example.dsidemo.views.profiles.UserPorfolio;
+import com.example.dsidemo.views.MainScreen.profiles.UserPorfolio;
 
 public class EditManocanhFragment extends Fragment {
 

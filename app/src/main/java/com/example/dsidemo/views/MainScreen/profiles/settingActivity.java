@@ -1,4 +1,4 @@
-package com.example.dsidemo.views.profiles;
+package com.example.dsidemo.views.MainScreen.profiles;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -16,12 +17,14 @@ import androidx.fragment.app.Fragment;
 
 import com.example.dsidemo.R;
 import com.example.dsidemo.helpers.StringResourceHelper;
+import com.example.dsidemo.helpers.helper;
 import com.example.dsidemo.views.MainScreen.MainScreen;
 import com.example.dsidemo.views.authenticate.LoginActivity;
 
 public class settingActivity extends Fragment {
     private SharedPreferences preferences;
     private Button btn_logout;
+    private ImageView btn_back;
 
     @Nullable
     @Override
@@ -34,6 +37,18 @@ public class settingActivity extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         btn_logout = view.findViewById(R.id.btn_logout);
+        btn_back = view.findViewById(R.id.btn_back);
+
+        helper.setTouchEffect(btn_back);
+
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                requireActivity().getSupportFragmentManager().popBackStack();
+            }
+        });
+
+
         btn_logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

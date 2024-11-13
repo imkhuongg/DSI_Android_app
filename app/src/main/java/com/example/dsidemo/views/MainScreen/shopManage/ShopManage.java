@@ -1,4 +1,4 @@
-package com.example.dsidemo.views.shopManage;
+package com.example.dsidemo.views.MainScreen.shopManage;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -26,9 +28,12 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.example.dsidemo.R;
 import com.example.dsidemo.helpers.APILinkHelper;
 import com.example.dsidemo.helpers.StringResourceHelper;
+import com.example.dsidemo.helpers.helper;
 import com.example.dsidemo.helpers.recycleviews.productListRecycleAdapter;
 import com.example.dsidemo.models.product;
 import com.example.dsidemo.utils.MySingleton;
+import com.example.dsidemo.views.MainScreen.MainScreen;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,12 +47,14 @@ import java.util.Map;
 public class ShopManage extends Fragment {
 
     private SharedPreferences preferences;
-    ProgressBar progressBar;
+    private ProgressBar progressBar;
     private  productListRecycleAdapter productListRecycleAdapter;
     private  RecyclerView recyclerView;
     private List<product> productList;
     private TextView NoneProduct_txt;
     private RequestQueue requestQueue;
+    private FloatingActionButton addbtn;
+    private ImageView btn_back;
 
     @Nullable
     @Override
@@ -66,20 +73,42 @@ public class ShopManage extends Fragment {
         recyclerView = view.findViewById(R.id.listProduct);
         //ProgressBar
         progressBar = view.findViewById(R.id.progressBar);
-
+        //txt
         NoneProduct_txt = view.findViewById(R.id.NoneProduct_txt);
+        //btn
+        addbtn = view.findViewById(R.id.add_btn);
+        //IMGView
+        btn_back = view.findViewById(R.id.btn_back);
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext(), LinearLayoutManager.VERTICAL, false));
 
+        helper.setTouchEffect(btn_back);
+
         getShopperProduct();
+
+        addbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addProduct addProduct = new addProduct();
+                if (getActivity() instanceof MainScreen) {
+                    ((MainScreen) getActivity()).replaceFragment(addProduct);
+                }
+            }
+        });
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                requireActivity().getSupportFragmentManager().popBackStack();
+            }
+        });
 
 
     }
 
     public void getShopperProduct(){
-        String uri = "http://192.168.0.102:8007/api/v1/product/get_shopper_product";
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, uri, null, new Response.Listener<JSONArray>() {
+
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, APILinkHelper.getProduts(), null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
 

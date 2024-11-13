@@ -1,7 +1,7 @@
 package com.example.dsidemo.helpers;
 
 public class APILinkHelper {
-    private static final String BASE_URL = "http://192.168.0.102:8007/api/v1/";
+    private static final String BASE_URL = "http://192.168.0.102:8008/api/v1/";
 
     public static String authUserApiUri(){
         return BASE_URL + "auth/login";
@@ -11,6 +11,12 @@ public class APILinkHelper {
     }
     public static String getProduts(){
         return BASE_URL + "product/get_shopper_product";
+    }
+    public static String createProduct(){
+        return BASE_URL + "product/create";
+    }
+    public static String postImg(){
+        return BASE_URL + "image/upload";
     }
 
 }
