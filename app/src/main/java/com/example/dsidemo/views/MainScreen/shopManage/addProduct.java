@@ -1,18 +1,16 @@
 package com.example.dsidemo.views.MainScreen.shopManage;
 
 import android.content.Context;
+import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
@@ -28,6 +27,8 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.android.volley.AuthFailureError;
@@ -38,18 +39,28 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.example.dsidemo.R;
 import com.example.dsidemo.helpers.APILinkHelper;
+import com.example.dsidemo.helpers.RealPathUtil;
 import com.example.dsidemo.helpers.StringResourceHelper;
+import com.example.dsidemo.helpers.api.ApiService;
 import com.example.dsidemo.helpers.helper;
 import com.example.dsidemo.utils.MySingleton;
 
-import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 
 public class addProduct extends Fragment {
     private ImageView btnback,imgProduct;
@@ -60,9 +71,14 @@ public class addProduct extends Fragment {
     private String nameImg;
     private EditText txt_name,txt_price,txt_description,txt_nameBrand;
     private Bitmap bitmapImg;
+    ProgressBar progressBar;
 
     private SharedPreferences sharedPreferences;
     private RequestQueue requestQueue;
+
+    private String endcodeIMG;
+    private File imgFile;
+    private String path;
 
     @Nullable
     @Override
@@ -86,8 +102,13 @@ public class addProduct extends Fragment {
         txt_price = view.findViewById(R.id.txt_price);
         txt_nameBrand = view.findViewById(R.id.txt_nameBrand);
 
+        progressBar = view.findViewById(R.id.progressBar);
+
         //Effect
         helper.setTouchEffect(btnback);
+
+        ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+
 
 
         //OnClịckEvent
@@ -109,39 +130,40 @@ public class addProduct extends Fragment {
         btn_addProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                progressBar.setVisibility(View.VISIBLE);
+                uplaodIMG();
                 createProduct();
+                progressBar.setVisibility(View.GONE);
             }
         });
 
     }
 
-    private void openFileChooser() {
-        Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        intent.setType("image/*");
-        resultLauncher.launch(intent);
 
+    private void openFileChooser() {
+        Intent intent = new Intent(MediaStore.ACTION_PICK_IMAGES);
+        resultLauncher.launch(intent);
     }
+
 
     private void registerResult(){
         resultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
                     @Override
                     public void onActivityResult(ActivityResult o) {
-                        try {
+
                             imageUri = o.getData().getData();
 
                             nameImg = getImageName(imageUri);
 
                             imgProduct.setVisibility(View.VISIBLE);
-                            InputStream inputStream = getActivity().getContentResolver().openInputStream(imageUri);
-                            bitmapImg = BitmapFactory.decodeStream(inputStream);
+                            path = RealPathUtil.getRealPath(getActivity() , imageUri);
+
+                            bitmapImg = BitmapFactory.decodeFile(path);
                             imgProduct.setImageBitmap(bitmapImg);
+
                             Toast.makeText(getActivity().getBaseContext(), "name IMG: " + nameImg, Toast.LENGTH_SHORT).show();
-                        }catch (IOException e){
-                            e.printStackTrace();
-                            Toast.makeText(getActivity().getBaseContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
-                        }
+
                     }
                 });
     }
@@ -183,12 +205,14 @@ public class addProduct extends Fragment {
             @Nullable
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
+                int id  = sharedPreferences.getInt("user_id", 0);
+                String imgPath = id + "/" + thumb;
                 Map<String ,String> params = new HashMap<>();
                 params.put("name_product" , nameProduct);
                 params.put("price" , price);
                 params.put("description",productDescription);
                 params.put("name_brand" , nameBrand);
-                params.put("thumb", thumb);
+                params.put("thumb", imgPath);
 
                 return params;
             }
@@ -208,8 +232,35 @@ public class addProduct extends Fragment {
     public void gotoMangeProduct(){
         requireActivity().getSupportFragmentManager().popBackStack();
     }
+    public void uplaodIMG(){
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(APILinkHelper.getBaseURL())
+                .addConverterFactory(GsonConverterFactory.create()).build();
+        File file = new File(path);
+        RequestBody requestfile = RequestBody.create(MediaType.parse("image/*") , file);
 
+        MultipartBody.Part body = MultipartBody.Part.createFormData("file" , file.getName() , requestfile);
 
+        ApiService apiService = retrofit.create(ApiService.class);
+
+        String token ="Bearer " +  sharedPreferences.getString("token", "");
+
+        Call<String> call = apiService.uploadImage(token , body);
+
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, retrofit2.Response<String> response) {
+                if(response.isSuccessful()){
+                    Toast.makeText(getActivity(), "OK", Toast.LENGTH_SHORT).show();
+                } else Toast.makeText(getActivity(), "!OK", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                Toast.makeText(getActivity(), "Đm Đ ổn rồi", Toast.LENGTH_SHORT).show();
+                t.printStackTrace();
+            }
+        });
+    }
 
 }
 

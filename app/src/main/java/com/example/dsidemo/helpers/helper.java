@@ -43,6 +43,7 @@ public class helper extends AppCompatActivity {
         if (hasFocus) {
             hideSystemUI(getWindow().getDecorView());
         }
+
     }
 
 }
