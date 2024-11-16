@@ -4,12 +4,12 @@ import android.content.Context;
 import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,7 +28,6 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.android.volley.AuthFailureError;
@@ -47,9 +46,6 @@ import com.example.dsidemo.utils.MySingleton;
 
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -76,8 +72,6 @@ public class addProduct extends Fragment {
     private SharedPreferences sharedPreferences;
     private RequestQueue requestQueue;
 
-    private String endcodeIMG;
-    private File imgFile;
     private String path;
 
     @Nullable
@@ -122,7 +116,6 @@ public class addProduct extends Fragment {
         registerResult();
         btn_imgUpload.setOnClickListener(v -> openFileChooser());
 
-
         sharedPreferences = getActivity().getSharedPreferences(StringResourceHelper.getUserDetailPrefName() , Context.MODE_PRIVATE);
 
         requestQueue = MySingleton.getInstance(getActivity().getBaseContext()).getRequestQueue();
@@ -131,9 +124,19 @@ public class addProduct extends Fragment {
             @Override
             public void onClick(View view) {
                 progressBar.setVisibility(View.VISIBLE);
-                uplaodIMG();
-                createProduct();
-                progressBar.setVisibility(View.GONE);
+                btn_addProduct.setEnabled(false);
+
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        uplaodIMG();
+                        createProduct();
+                        progressBar.setVisibility(View.GONE);
+                        btn_addProduct.setEnabled(true);
+                    }
+                }, 2000);
+
             }
         });
 
@@ -141,7 +144,7 @@ public class addProduct extends Fragment {
 
 
     private void openFileChooser() {
-        Intent intent = new Intent(MediaStore.ACTION_PICK_IMAGES);
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         resultLauncher.launch(intent);
     }
 
@@ -256,7 +259,7 @@ public class addProduct extends Fragment {
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
-                Toast.makeText(getActivity(), "Đm Đ ổn rồi", Toast.LENGTH_SHORT).show();
+              //  Toast.makeText(getActivity(), "Đm Đ ổn rồi", Toast.LENGTH_SHORT).show();
                 t.printStackTrace();
             }
         });

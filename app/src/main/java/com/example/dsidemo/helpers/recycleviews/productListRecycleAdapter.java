@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -80,6 +81,13 @@ public class productListRecycleAdapter extends RecyclerView.Adapter<productListR
         holder.brandName_txt.setText("Thương hiệu: " +productList.get(position).getName_brand());
         holder.rate_txt.setText("Đánh giá: "+productList.get(position).getRate());
         Glide.with(this.context).load(productList.get(position).getThumb()).into(holder.img_product);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
     }
 
     @Override

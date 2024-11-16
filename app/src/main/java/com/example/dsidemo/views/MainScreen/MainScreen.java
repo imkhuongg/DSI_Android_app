@@ -36,7 +36,7 @@ public class MainScreen extends AppCompatActivity {
         frameLayout = findViewById(R.id.fragment_container);
         bottomNavigationView.setOnItemSelectedListener(navListener);
 
-        // Hiển thị fragment đầu tiên
+
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragment_container, new EditManocanhFragment()).commit();
     }
@@ -73,7 +73,7 @@ public class MainScreen extends AppCompatActivity {
     };
     public void replaceFragment(Fragment fragment) {
         getSupportFragmentManager().beginTransaction()
-                .setCustomAnimations(R.anim.slide_in_up, R.anim.slide_out_down, R.anim.slide_in_up, R.anim.slide_out_down) // Animation chuyển đổi
+                .setCustomAnimations(R.anim.slide_in_up, R.anim.slide_out_down, R.anim.slide_in_up, R.anim.slide_out_down)
                 .replace(R.id.fragment_container, fragment)
                 .addToBackStack(null)
                 .commit();
