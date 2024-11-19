@@ -1,6 +1,7 @@
 package com.example.dsidemo.views.MainScreen.shopManage;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,17 +14,15 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.example.dsidemo.R;
+import com.example.dsidemo.ViewModel.ShopManageViewModel;
 import com.example.dsidemo.helpers.APILinkHelper;
 import com.example.dsidemo.helpers.StringResourceHelper;
 import com.example.dsidemo.helpers.helper;
@@ -33,17 +32,12 @@ import com.example.dsidemo.utils.MySingleton;
 import com.example.dsidemo.views.MainScreen.MainScreen;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-public class ShopManage extends Fragment {
+public class ShopManage extends AppCompatActivity {
 
     private SharedPreferences preferences;
     private ProgressBar progressBar;
@@ -54,53 +48,50 @@ public class ShopManage extends Fragment {
     private RequestQueue requestQueue;
     private FloatingActionButton addbtn;
     private ImageView btn_back;
+    private ShopManageViewModel  ShopManageViewModel;
 
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        clearCache();
-        return inflater.inflate(R.layout.layout_shop_manage , container , false);
-    }
+    private ShopManageViewModel shopManageViewModel;
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    setContentView(R.layout.layout_shop_manage);
 
-        super.onViewCreated(view, savedInstanceState);
-        productList = new ArrayList<>();
-        requestQueue = MySingleton.getInstance(view.getContext()).getRequestQueue();
-        preferences = getActivity().getSharedPreferences(StringResourceHelper.getUserDetailPrefName() , Context.MODE_PRIVATE);
+    productList = new ArrayList<>();
+        requestQueue = MySingleton.getInstance(this).getRequestQueue();
+        preferences = getSharedPreferences(StringResourceHelper.getUserDetailPrefName() , Context.MODE_PRIVATE);
 
         //RecyclerView
-        recyclerView = view.findViewById(R.id.listProduct);
+        recyclerView = findViewById(R.id.listProduct);
         //ProgressBar
-        progressBar = view.findViewById(R.id.progressBar);
+        progressBar = findViewById(R.id.progressBar);
         //txt
-        NoneProduct_txt = view.findViewById(R.id.NoneProduct_txt);
+        NoneProduct_txt = findViewById(R.id.NoneProduct_txt);
         //btn
-        addbtn = view.findViewById(R.id.add_btn);
+        addbtn = findViewById(R.id.add_btn);
         //IMGView
-        btn_back = view.findViewById(R.id.btn_back);
+        btn_back = findViewById(R.id.btn_back);
 
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext(), LinearLayoutManager.VERTICAL, false));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
         helper.setTouchEffect(btn_back);
+        helper.hideSystemUI(getWindow().getDecorView());
 
         getShopperProduct();
+
 
         addbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addProduct addProduct = new addProduct();
-                if (getActivity() instanceof MainScreen) {
-                    ((MainScreen) getActivity()).replaceFragment(addProduct);
-                }
+                Intent intent = new Intent(ShopManage.this , addProduct.class);
+                startActivity(intent);
             }
         });
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                requireActivity().getSupportFragmentManager().popBackStack();
+                finish();
             }
         });
 
@@ -108,66 +99,30 @@ public class ShopManage extends Fragment {
     }
 
     public void getShopperProduct(){
+        progressBar.setVisibility(View.GONE);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        String token = preferences.getString("token" , "");
+        shopManageViewModel = new ViewModelProvider(this).get(ShopManageViewModel.class);
+        shopManageViewModel.getProductShopManage(requestQueue , token);
+        productListRecycleAdapter = new productListRecycleAdapter(new ArrayList<>() ,this,shopManageViewModel);
 
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, APILinkHelper.getProduts(), null, new Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(JSONArray response) {
-
-                progressBar.setVisibility(View.GONE);
-                recyclerView.setVisibility(View.VISIBLE);
-
-                for(int i = 0 ; i< response.length() ;i++){
-                    try {
-                        JSONObject respone = response.getJSONObject(i);
-                        product product =
-                                new product(respone.getInt("product_id") , respone.getString("name_product"), respone.getDouble("price"),respone.getInt("user_id"), respone.getString("description"), respone.getDouble("rate"), respone.getString("name_brand"), APILinkHelper.getIMG() + respone.getString("thumb"), respone.getInt("quantity_sold"));
-
-                        productList.add(product);
-
-
-                    }catch (JSONException e){
-                        Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
-                        e.printStackTrace();
-                    }
-                }
-                productListRecycleAdapter = new productListRecycleAdapter(productList, getContext());
-                recyclerView.setAdapter(productListRecycleAdapter);
-
-            }
-
-
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                progressBar.setVisibility(View.GONE);
-                NoneProduct_txt.setVisibility(View.VISIBLE);
-                Toast.makeText(getActivity().getBaseContext(), "failed to load products", Toast.LENGTH_SHORT).show();
-            }
-        }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                String token = preferences.getString("token" , "");
-                Map<String , String> headers = new HashMap<>();
-                headers.put("Authorization", "Bearer " + token);
-                headers.put("content-type", "application/json");
-                return headers;
-
-            }
-        };
-        requestQueue.add(jsonArrayRequest);
-
+        shopManageViewModel.getProducts().observe(this,products -> {
+            productListRecycleAdapter.setProductList(products);
+        } );
+        recyclerView.setAdapter(productListRecycleAdapter);
+        recyclerView.setVisibility(View.VISIBLE);
     }
     private void clearCache() {
         try {
-            File cacheDir = requireContext().getCacheDir();
+            File cacheDir = getCacheDir();
             if (deleteDir(cacheDir)) {
 
             } else {
-                Toast.makeText(getContext(), "Failed to clear cache", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Failed to clear cache", Toast.LENGTH_SHORT).show();
             }
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(getContext(), "Error clearing cache", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"Error clearing cache", Toast.LENGTH_SHORT).show();
         }
     }
 

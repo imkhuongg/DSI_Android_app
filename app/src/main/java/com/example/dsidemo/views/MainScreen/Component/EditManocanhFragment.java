@@ -1,5 +1,6 @@
 package com.example.dsidemo.views.MainScreen.Component;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -61,11 +62,8 @@ public class EditManocanhFragment extends Fragment {
         porfolio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                UserPorfolio userPorfolio = new UserPorfolio();
-                if (getActivity() instanceof MainScreen) {
-                    ((MainScreen) getActivity()).replaceFragment(userPorfolio);
-
-                }
+                Intent intent = new Intent(getActivity() , UserPorfolio.class);
+                startActivity(intent);
             }
         });
     }

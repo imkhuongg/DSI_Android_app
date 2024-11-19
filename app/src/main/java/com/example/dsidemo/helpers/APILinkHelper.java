@@ -1,7 +1,7 @@
 package com.example.dsidemo.helpers;
 
 public class APILinkHelper {
-    private static final String BASE_URL = "http://172.16.1.44:8008/api/v1/";
+    private static final String BASE_URL = "http://192.168.1.139:8008/api/v1/";
 
 public static String getBaseURL(){
     return BASE_URL;
@@ -22,5 +22,4 @@ public static String getBaseURL(){
     public static String postImg(){
         return BASE_URL + "image/upload";
     }
-
 }

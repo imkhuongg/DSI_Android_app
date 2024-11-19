@@ -28,21 +28,16 @@ import java.util.List;
 import java.util.Map;
 
 public class productRepository {
-    private final Context context;
-
-    private final String token;
 
 
-    public productRepository(Context context, String token) {
-        this.context = context;
-        this.token = token;
-    }
 
-    public LiveData<List<product>> getProductShopper() {
+
+    public productRepository() {}
+
+    public LiveData<List<product>> getProductShopper(RequestQueue queue,String token,final RepositoryCallback callback) {
         MutableLiveData<List<product>> liveData = new MutableLiveData<>();
 
-        RequestQueue requestQueue = Volley.newRequestQueue(context);
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.POST, APILinkHelper.getProduts(), null, new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, APILinkHelper.getProduts(), null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 List<product> products = new ArrayList<>();
@@ -51,21 +46,32 @@ public class productRepository {
                     try {
                         JSONObject respone = response.getJSONObject(i);
                         product product =
-                                new product(respone.getInt("product_id"), respone.getString("name_product"), respone.getDouble("price"), respone.getInt("user_id"), respone.getString("description"), respone.getDouble("rate"), respone.getString("name_brand"), APILinkHelper.getIMG() + respone.getString("thumb"), respone.getInt("quantity_sold"));
+                                new product(
+                                        respone.getInt("product_id"),
+                                        respone.getString("name_product"),
+                                        respone.getDouble("price"),
+                                        respone.getInt("user_id"),
+                                        respone.getString("description"),
+                                        respone.getDouble("rate"),
+                                        respone.getString("name_brand"),
+                                        APILinkHelper.getIMG() + respone.getString("thumb"),
+                                        respone.getInt("quantity_sold"),
+                                        respone.getString("created_at"),
+                                        respone.getString("updated_at")
+                                );
 
                         products.add(product);
 
                     } catch (JSONException e) {
-                        Toast.makeText(context,"Something went wrong", Toast.LENGTH_SHORT).show();
                         e.printStackTrace();
                     }
                 }
-                liveData.setValue(products);
+                callback.onSuccess(products);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(context, "failed to load products", Toast.LENGTH_SHORT).show();
+                callback.onError(error);
             }
         }){
             @Override
@@ -76,8 +82,12 @@ public class productRepository {
                 return headers;
             }
         };
-        requestQueue.add(jsonArrayRequest);
+        queue.add(jsonArrayRequest);
         return liveData;
+    }
+    public interface RepositoryCallback {
+        void onSuccess(List<product> products);
+        void onError(VolleyError error);
     }
 
 }

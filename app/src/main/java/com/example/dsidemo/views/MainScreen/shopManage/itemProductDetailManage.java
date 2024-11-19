@@ -1,64 +1,88 @@
 package com.example.dsidemo.views.MainScreen.shopManage;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.android.volley.RequestQueue;
+import com.bumptech.glide.Glide;
 import com.example.dsidemo.R;
+import com.example.dsidemo.ViewModel.ShopManageViewModel;
+import com.example.dsidemo.helpers.APILinkHelper;
 import com.example.dsidemo.helpers.StringResourceHelper;
+import com.example.dsidemo.helpers.helper;
 import com.example.dsidemo.utils.MySingleton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-public class itemProductDetailManage extends Fragment {
+public class itemProductDetailManage extends AppCompatActivity {
     private TextView txt_nameProduct,txt_nameBrand,txt_idProduct,txt_price,txt_rate,txt_createdAt,txt_updatedAt;
     private EditText txt_description;
     private ImageView img_product,btn_back;
-    private FloatingActionButton btn_edit;
+    private FloatingActionButton btn_edit , btn_delete;
 
-    RequestQueue requestQueue;
-    SharedPreferences sharedPreferences;
+    private ShopManageViewModel shopManageViewModel;
 
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.item_shopmanage_recyleview , container , false);
-    }
+    private RequestQueue requestQueue;
+    private SharedPreferences sharedPreferences;
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.item_shopmanage_recyleview);
         //TEXT
-        txt_nameProduct = view.findViewById(R.id.txt_nameProduct);
-        txt_nameBrand = view.findViewById(R.id.txt_nameBrand);
-        txt_idProduct = view.findViewById(R.id.txt_idProduct);
-        txt_price = view.findViewById(R.id.txt_price);
-        txt_rate = view.findViewById(R.id.txt_rate);
-        txt_createdAt = view.findViewById(R.id.txt_createdAt);
-        txt_updatedAt = view.findViewById(R.id.txt_updatedAt);
-        txt_description = view.findViewById(R.id.txt_description);
+        txt_nameProduct = findViewById(R.id.txt_nameProduct);
+        txt_nameBrand = findViewById(R.id.txt_nameBrand);
+        txt_idProduct = findViewById(R.id.txt_idProduct);
+        txt_price = findViewById(R.id.txt_price);
+        txt_rate = findViewById(R.id.txt_rate);
+        txt_createdAt = findViewById(R.id.txt_createdAt);
+        txt_updatedAt = findViewById(R.id.txt_updatedAt);
+        txt_description = findViewById(R.id.txt_description);
 
-        //IMG
-        img_product = view.findViewById(R.id.img_product);
+        img_product = findViewById(R.id.img_product);
 
-        //Button
-        btn_back = view.findViewById(R.id.btn_back);
-        btn_edit = view.findViewById(R.id.btn_edit);
 
-        sharedPreferences = view.getContext().getSharedPreferences(StringResourceHelper.getUserDetailPrefName() , Context.MODE_PRIVATE);
+        btn_back = findViewById(R.id.btn_back);
+        btn_edit = findViewById(R.id.btn_edit);
+        btn_delete = findViewById(R.id.btn_delete);
 
-        requestQueue = MySingleton.getInstance(getActivity()).getRequestQueue();
+        helper.setTouchEffect(btn_back);
+        helper.hideSystemUI(getWindow().getDecorView());
 
+        sharedPreferences = getSharedPreferences(StringResourceHelper.getUserDetailPrefName() , Context.MODE_PRIVATE);
+
+        requestQueue = MySingleton.getInstance(this).getRequestQueue();
+        Intent intent = getIntent();
+
+        Glide
+                .with(this)
+                .load(intent.getStringExtra("thumb"))
+                .into(img_product);
+        txt_nameProduct.setText(intent.getStringExtra("name_product"));
+        txt_nameBrand.setText("Thương hiệu: " + intent.getStringExtra("name_brand"));
+        txt_idProduct.setText("Mã sản phẩm: "+ intent.getIntExtra("id_product", 0));
+        txt_price.setText(String.valueOf(intent.getDoubleExtra("price" , 0)) + "đ");
+        txt_rate.setText(intent.getDoubleExtra("rate" , 0) + "/5");
+        txt_description.setText(intent.getStringExtra("description"));
+        txt_createdAt.setText("Created at: "+intent.getStringExtra("createdAt"));
+        txt_updatedAt.setText("Updated at: " + intent.getStringExtra("updatedAt"));
+
+        btn_back.setOnClickListener(v -> {
+            finish();
+        });
+        
     }
+
+   
+
+    
 }

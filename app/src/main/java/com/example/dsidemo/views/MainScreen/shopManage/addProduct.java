@@ -12,9 +12,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -25,10 +23,9 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.Fragment;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -58,7 +55,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 
-public class addProduct extends Fragment {
+public class addProduct extends AppCompatActivity {
     private ImageView btnback,imgProduct;
     private Button btn_imgUpload,btn_addProduct;
     private ActivityResultLauncher<Intent> resultLauncher;
@@ -74,34 +71,30 @@ public class addProduct extends Fragment {
 
     private String path;
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.layout_add_product , container , false);
-    }
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.layout_add_product);
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        //Button
-        btnback = view.findViewById(R.id.btn_back);
-        btn_imgUpload = view.findViewById(R.id.btn_imgUpload);
-        imgProduct = view.findViewById(R.id.imgProduct);
-        btn_addProduct = view.findViewById(R.id.btn_addProduct);
+    //Button
+        btnback = findViewById(R.id.btn_back);
+        btn_imgUpload = findViewById(R.id.btn_imgUpload);
+        imgProduct = findViewById(R.id.imgProduct);
+        btn_addProduct = findViewById(R.id.btn_addProduct);
 
         //EditText
-        txt_description = view.findViewById(R.id.txt_description);
-        txt_name = view.findViewById(R.id.txt_name);
-        txt_price = view.findViewById(R.id.txt_price);
-        txt_nameBrand = view.findViewById(R.id.txt_nameBrand);
+        txt_description = findViewById(R.id.txt_description);
+        txt_name = findViewById(R.id.txt_name);
+        txt_price = findViewById(R.id.txt_price);
+        txt_nameBrand = findViewById(R.id.txt_nameBrand);
 
-        progressBar = view.findViewById(R.id.progressBar);
+        progressBar = findViewById(R.id.progressBar);
 
         //Effect
         helper.setTouchEffect(btnback);
+        helper.hideSystemUI(getWindow().getDecorView());
 
-        ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
 
 
 
@@ -109,16 +102,16 @@ public class addProduct extends Fragment {
         btnback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                requireActivity().getSupportFragmentManager().popBackStack();
+                getSupportFragmentManager().popBackStack();
             }
         });
 
         registerResult();
         btn_imgUpload.setOnClickListener(v -> openFileChooser());
 
-        sharedPreferences = getActivity().getSharedPreferences(StringResourceHelper.getUserDetailPrefName() , Context.MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences(StringResourceHelper.getUserDetailPrefName() , Context.MODE_PRIVATE);
 
-        requestQueue = MySingleton.getInstance(getActivity().getBaseContext()).getRequestQueue();
+        requestQueue = MySingleton.getInstance(getBaseContext()).getRequestQueue();
 
         btn_addProduct.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -160,12 +153,12 @@ public class addProduct extends Fragment {
                             nameImg = getImageName(imageUri);
 
                             imgProduct.setVisibility(View.VISIBLE);
-                            path = RealPathUtil.getRealPath(getActivity() , imageUri);
+                            path = RealPathUtil.getRealPath(addProduct.this , imageUri);
 
                             bitmapImg = BitmapFactory.decodeFile(path);
                             imgProduct.setImageBitmap(bitmapImg);
 
-                            Toast.makeText(getActivity().getBaseContext(), "name IMG: " + nameImg, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getBaseContext(), "name IMG: " + nameImg, Toast.LENGTH_SHORT).show();
 
                     }
                 });
@@ -173,7 +166,7 @@ public class addProduct extends Fragment {
 
     private String getImageName(Uri uri) {
         String[] projection = {MediaStore.Images.Media.DISPLAY_NAME};
-        Cursor cursor = getContext().getContentResolver().query(uri, projection, null, null, null);
+        Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
 
         if (cursor != null && cursor.moveToFirst()) {
             int columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DISPLAY_NAME);
@@ -197,12 +190,12 @@ public class addProduct extends Fragment {
             public void onResponse(String response) {
                 gotoMangeProduct();
                 Log.i("CreateProductActivity" , response.toString());
-                Toast.makeText(getActivity().getBaseContext(), "Thêm sản phẩm mới thành công!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(), "Thêm sản phẩm mới thành công!", Toast.LENGTH_SHORT).show();
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getActivity().getBaseContext(), "Có lỗi xảy ra! Không thể tạo sản phẩm mới", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(), "Có lỗi xảy ra! Không thể tạo sản phẩm mới", Toast.LENGTH_SHORT).show();
             }
         }){
             @Nullable
@@ -233,7 +226,7 @@ public class addProduct extends Fragment {
     }
 
     public void gotoMangeProduct(){
-        requireActivity().getSupportFragmentManager().popBackStack();
+        finish();
     }
     public void uplaodIMG(){
         Retrofit retrofit = new Retrofit.Builder().baseUrl(APILinkHelper.getBaseURL())
@@ -253,8 +246,8 @@ public class addProduct extends Fragment {
             @Override
             public void onResponse(Call<String> call, retrofit2.Response<String> response) {
                 if(response.isSuccessful()){
-                    Toast.makeText(getActivity(), "OK", Toast.LENGTH_SHORT).show();
-                } else Toast.makeText(getActivity(), "!OK", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(addProduct.this, "OK", Toast.LENGTH_SHORT).show();
+                } else Toast.makeText(addProduct.this, "!OK", Toast.LENGTH_SHORT).show();
             }
 
             @Override

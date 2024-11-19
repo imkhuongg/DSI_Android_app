@@ -1,6 +1,7 @@
 package com.example.dsidemo.views.MainScreen.profiles;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.example.dsidemo.R;
@@ -20,37 +22,34 @@ import com.example.dsidemo.views.MainScreen.MainScreen;
 import com.example.dsidemo.views.MainScreen.shopManage.ShopManage;
 import com.google.android.material.button.MaterialButton;
 
-public class UserPorfolio extends Fragment {
+public class UserPorfolio extends AppCompatActivity {
 
     private MaterialButton btn_userInfo,btn_security,btn_payment,btn_shop_manage,btn_help;
     private ImageView settingBtn,btn_extract,btn_delivery,btn_shipping,btn_rating,btn_back;
     private TextView nameUser;
     private SharedPreferences preferences;
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.profile_layout , container , false);
-    }
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.profile_layout);
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        //Button
-        btn_userInfo = view.findViewById(R.id.btn_userInfo);
-        btn_security = view.findViewById(R.id.btn_security);
-        btn_payment = view.findViewById(R.id.btn_payment);
-        btn_shop_manage = view.findViewById(R.id.btn_shop_manage);
-        btn_help = view.findViewById(R.id.btn_help);
+
+    //Button
+        btn_userInfo = findViewById(R.id.btn_userInfo);
+        btn_security = findViewById(R.id.btn_security);
+        btn_payment = findViewById(R.id.btn_payment);
+        btn_shop_manage = findViewById(R.id.btn_shop_manage);
+        btn_help = findViewById(R.id.btn_help);
         //ImageView
-        settingBtn = view.findViewById(R.id.settingBtn);
-        btn_extract = view.findViewById(R.id.btn_extract);
-        btn_delivery = view.findViewById(R.id.btn_delivery);
-        btn_shipping = view.findViewById(R.id.btn_shipping);
-        btn_rating = view.findViewById(R.id.btn_rating);
-        btn_back = view.findViewById(R.id.btn_back);
+        settingBtn = findViewById(R.id.settingBtn);
+        btn_extract = findViewById(R.id.btn_extract);
+        btn_delivery = findViewById(R.id.btn_delivery);
+        btn_shipping = findViewById(R.id.btn_shipping);
+        btn_rating = findViewById(R.id.btn_rating);
+        btn_back = findViewById(R.id.btn_back);
         //TextView
-        nameUser = view.findViewById(R.id.txt_nameUser);
+        nameUser = findViewById(R.id.txt_nameUser);
 
 
         helper.setTouchEffect(btn_userInfo);
@@ -65,18 +64,18 @@ public class UserPorfolio extends Fragment {
         helper.setTouchEffect(btn_rating);
         helper.setTouchEffect(btn_back);
 
+        helper.hideSystemUI(getWindow().getDecorView());
+
 
         settingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                settingActivity settingActivity = new settingActivity();
-                if (getActivity() instanceof MainScreen) {
-                    ((MainScreen) getActivity()).replaceFragment(settingActivity);
-                }
+                Intent intent = new Intent(UserPorfolio.this,settingActivity.class);
+                startActivity(intent);
             }
         });
 
-        preferences= getActivity().getSharedPreferences(StringResourceHelper.getUserDetailPrefName(), Context.MODE_PRIVATE);
+        preferences= getSharedPreferences(StringResourceHelper.getUserDetailPrefName(), Context.MODE_PRIVATE);
         if(preferences.getBoolean("authenticated" , false)){
             String fullNameUser = preferences.getString("last_name" , "last_name")+ " " + preferences.getString("first_name" , "first_name");
             nameUser.setText(fullNameUser);
@@ -84,16 +83,14 @@ public class UserPorfolio extends Fragment {
         btn_shop_manage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ShopManage shopManage = new ShopManage();
-                if (getActivity() instanceof MainScreen) {
-                    ((MainScreen) getActivity()).replaceFragment(shopManage);
-                }
+                Intent intent = new Intent(UserPorfolio.this , ShopManage.class);
+                startActivity(intent);
             }
         });
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                requireActivity().getSupportFragmentManager().popBackStack();
+                finish();
             }
         });
 

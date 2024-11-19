@@ -12,10 +12,10 @@ public class product {
     private String name_brand;
     private String thumb;
     private int quantity_sold;
-    private LocalDateTime created_at;
-    private LocalDateTime updated_at;
+    private String created_at;
+    private String updated_at;
 
-    public product(int product_id, String name_product, double price, int user_id, String description, double rate, String name_brand, String thumb, int quantity_sold) {
+    public product(int product_id, String name_product, double price, int user_id, String description, double rate, String name_brand, String thumb, int quantity_sold,String created_at ,String updated_at) {
         this.product_id = product_id;
         this.name_product = name_product;
         this.price = price;
@@ -25,6 +25,8 @@ public class product {
         this.name_brand = name_brand;
         this.thumb = thumb;
         this.quantity_sold = quantity_sold;
+        this.created_at = created_at;
+        this.updated_at = updated_at;
     }
 
     public product() {}
@@ -104,19 +106,21 @@ public class product {
         this.quantity_sold = quantity_sold;
     }
 
-    public LocalDateTime getCreated_at() {
-        return created_at;
+    public String getCreated_at() {
+        if(created_at == null) return " ";
+        else return created_at;
     }
 
-    public void setCreated_at(LocalDateTime created_at) {
+    public void setCreated_at(String created_at) {
         this.created_at = created_at;
     }
 
-    public LocalDateTime getUpdated_at() {
-        return updated_at;
+    public String getUpdated_at() {
+        if(updated_at == null) return  " ";
+        else return updated_at;
     }
 
-    public void setUpdated_at(LocalDateTime updated_at) {
+    public void setUpdated_at(String updated_at) {
         this.updated_at = updated_at;
     }
 }
