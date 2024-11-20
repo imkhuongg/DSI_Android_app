@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -13,15 +14,25 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.bumptech.glide.Glide;
 import com.example.dsidemo.R;
 import com.example.dsidemo.ViewModel.ShopManageViewModel;
 import com.example.dsidemo.helpers.APILinkHelper;
 import com.example.dsidemo.helpers.StringResourceHelper;
 import com.example.dsidemo.helpers.helper;
+import com.example.dsidemo.models.product;
+import com.example.dsidemo.repository.productRepository;
 import com.example.dsidemo.utils.MySingleton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class itemProductDetailManage extends AppCompatActivity {
     private TextView txt_nameProduct,txt_nameBrand,txt_idProduct,txt_price,txt_rate,txt_createdAt,txt_updatedAt;
@@ -33,6 +44,8 @@ public class itemProductDetailManage extends AppCompatActivity {
 
     private RequestQueue requestQueue;
     private SharedPreferences sharedPreferences;
+    private productRepository repository;
+    private product prod;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -65,7 +78,7 @@ public class itemProductDetailManage extends AppCompatActivity {
 
         Glide
                 .with(this)
-                .load(intent.getStringExtra("thumb"))
+                .load(APILinkHelper.getIMG() + intent.getStringExtra("thumb"))
                 .into(img_product);
         txt_nameProduct.setText(intent.getStringExtra("name_product"));
         txt_nameBrand.setText("Thương hiệu: " + intent.getStringExtra("name_brand"));
@@ -76,13 +89,44 @@ public class itemProductDetailManage extends AppCompatActivity {
         txt_createdAt.setText("Created at: "+intent.getStringExtra("createdAt"));
         txt_updatedAt.setText("Updated at: " + intent.getStringExtra("updatedAt"));
 
+        String product_id = String.valueOf(intent.getIntExtra("id_product",0));
+
         btn_back.setOnClickListener(v -> {
+            finish();
+        });
+        btn_delete.setOnClickListener(v -> {
+            deleteProduct(product_id);
+        });
+        int user_id = sharedPreferences.getInt("user_id", 0);
+        prod = new product(intent.getIntExtra("id_product", 0),intent.getStringExtra("name_product") ,intent.getDoubleExtra("price" , 0), user_id,intent.getStringExtra("description"), intent.getDoubleExtra("rate" , 0), intent.getStringExtra("name_brand"), intent.getStringExtra("thumb"),0,intent.getStringExtra("createdAt") ,intent.getStringExtra("updatedAt"));
+        btn_edit.setOnClickListener(v -> {
+            Intent intent1 = new Intent(itemProductDetailManage.this , updateProductActivity.class);
+            intent1.putExtra("productModel" , prod);
+            startActivity(intent1);
             finish();
         });
         
     }
 
-   
+    public void deleteProduct(String id){
+        String token = sharedPreferences.getString("token" , "");
+        repository = new productRepository();
+        repository.deleteProduct(id, token, requestQueue, new productRepository.StringCallback() {
+            @Override
+            public void onResponse(String response) {
+                Intent intent =  new Intent(itemProductDetailManage.this , ShopManage.class);
+                startActivity(intent);
+                finish();
 
-    
+            }
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(itemProductDetailManage.this, "Có lỗi xảy ra khi xoá sản phẩm", Toast.LENGTH_SHORT).show();
+                error.printStackTrace();
+            }
+        });
+
+    }
+
 }

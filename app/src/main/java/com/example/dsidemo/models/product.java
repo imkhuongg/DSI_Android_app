@@ -1,8 +1,8 @@
 package com.example.dsidemo.models;
 
-import java.time.LocalDateTime;
+import java.io.Serializable;
 
-public class product {
+public class product implements Serializable {
     private int product_id;
     private  String name_product;
     private double price;

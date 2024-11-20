@@ -86,6 +86,7 @@ public class ShopManage extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(ShopManage.this , addProduct.class);
                 startActivity(intent);
+                finish();
             }
         });
         btn_back.setOnClickListener(new View.OnClickListener() {

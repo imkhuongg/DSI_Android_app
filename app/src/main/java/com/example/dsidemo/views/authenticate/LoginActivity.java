@@ -146,7 +146,6 @@ public class LoginActivity extends AppCompatActivity {
                             editor.putString("email" , response.getString("username"));
                             editor.putString("token" , response.getString("token"));
                             editor.putBoolean("authenticated" , true);
-
                             editor.apply();
 
                             gotoMainActivityAuthenticated();

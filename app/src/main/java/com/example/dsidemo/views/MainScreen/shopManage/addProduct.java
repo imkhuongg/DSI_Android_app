@@ -56,13 +56,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class addProduct extends AppCompatActivity {
-    private ImageView btnback,imgProduct;
-    private Button btn_imgUpload,btn_addProduct;
+    private ImageView btnback, imgProduct;
+    private Button btn_imgUpload, btn_addProduct;
     private ActivityResultLauncher<Intent> resultLauncher;
     private static final int PICK_IMAGE_REQUEST = 1;
     private Uri imageUri;
     private String nameImg;
-    private EditText txt_name,txt_price,txt_description,txt_nameBrand;
+    private EditText txt_name, txt_price, txt_description, txt_nameBrand;
     private Bitmap bitmapImg;
     ProgressBar progressBar;
 
@@ -76,7 +76,7 @@ public class addProduct extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_add_product);
 
-    //Button
+        //Button
         btnback = findViewById(R.id.btn_back);
         btn_imgUpload = findViewById(R.id.btn_imgUpload);
         imgProduct = findViewById(R.id.imgProduct);
@@ -97,19 +97,18 @@ public class addProduct extends AppCompatActivity {
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
 
 
-
         //OnClịckEvent
         btnback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getSupportFragmentManager().popBackStack();
+                finish();
             }
         });
 
         registerResult();
         btn_imgUpload.setOnClickListener(v -> openFileChooser());
 
-        sharedPreferences = getSharedPreferences(StringResourceHelper.getUserDetailPrefName() , Context.MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences(StringResourceHelper.getUserDetailPrefName(), Context.MODE_PRIVATE);
 
         requestQueue = MySingleton.getInstance(getBaseContext()).getRequestQueue();
 
@@ -142,24 +141,26 @@ public class addProduct extends AppCompatActivity {
     }
 
 
-    private void registerResult(){
+    private void registerResult() {
         resultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
                     @Override
                     public void onActivityResult(ActivityResult o) {
+                        if (o != null && o.getData() != null) {
 
                             imageUri = o.getData().getData();
 
                             nameImg = getImageName(imageUri);
 
                             imgProduct.setVisibility(View.VISIBLE);
-                            path = RealPathUtil.getRealPath(addProduct.this , imageUri);
+                            path = RealPathUtil.getRealPath(addProduct.this, imageUri);
 
                             bitmapImg = BitmapFactory.decodeFile(path);
                             imgProduct.setImageBitmap(bitmapImg);
 
                             Toast.makeText(getBaseContext(), "name IMG: " + nameImg, Toast.LENGTH_SHORT).show();
 
+                        }
                     }
                 });
     }
@@ -178,7 +179,7 @@ public class addProduct extends AppCompatActivity {
         }
     }
 
-    public void createProduct(){
+    public void createProduct() {
         String nameProduct = txt_name.getText().toString();
         String price = txt_price.getText().toString();
         String productDescription = txt_description.getText().toString();
@@ -189,7 +190,7 @@ public class addProduct extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 gotoMangeProduct();
-                Log.i("CreateProductActivity" , response.toString());
+                Log.i("CreateProductActivity", response.toString());
                 Toast.makeText(getBaseContext(), "Thêm sản phẩm mới thành công!", Toast.LENGTH_SHORT).show();
             }
         }, new Response.ErrorListener() {
@@ -197,17 +198,17 @@ public class addProduct extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(getBaseContext(), "Có lỗi xảy ra! Không thể tạo sản phẩm mới", Toast.LENGTH_SHORT).show();
             }
-        }){
+        }) {
             @Nullable
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                int id  = sharedPreferences.getInt("user_id", 0);
+                int id = sharedPreferences.getInt("user_id", 0);
                 String imgPath = id + "/" + thumb;
-                Map<String ,String> params = new HashMap<>();
-                params.put("name_product" , nameProduct);
-                params.put("price" , price);
-                params.put("description",productDescription);
-                params.put("name_brand" , nameBrand);
+                Map<String, String> params = new HashMap<>();
+                params.put("name_product", nameProduct);
+                params.put("price", price);
+                params.put("description", productDescription);
+                params.put("name_brand", nameBrand);
                 params.put("thumb", imgPath);
 
                 return params;
@@ -216,8 +217,8 @@ public class addProduct extends AppCompatActivity {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 String token = sharedPreferences.getString("token", "");
-                Map<String,String> header = new HashMap<>();
-                header.put("Authorization" , "Bearer " + token);
+                Map<String, String> header = new HashMap<>();
+                header.put("Authorization", "Bearer " + token);
                 return header;
             }
         };
@@ -225,34 +226,37 @@ public class addProduct extends AppCompatActivity {
 
     }
 
-    public void gotoMangeProduct(){
+    public void gotoMangeProduct() {
+        Intent intent = new Intent(this, ShopManage.class);
+        startActivity(intent);
         finish();
     }
-    public void uplaodIMG(){
+
+    public void uplaodIMG() {
         Retrofit retrofit = new Retrofit.Builder().baseUrl(APILinkHelper.getBaseURL())
                 .addConverterFactory(GsonConverterFactory.create()).build();
         File file = new File(path);
-        RequestBody requestfile = RequestBody.create(MediaType.parse("image/*") , file);
+        RequestBody requestfile = RequestBody.create(MediaType.parse("image/*"), file);
 
-        MultipartBody.Part body = MultipartBody.Part.createFormData("file" , file.getName() , requestfile);
+        MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), requestfile);
 
         ApiService apiService = retrofit.create(ApiService.class);
 
-        String token ="Bearer " +  sharedPreferences.getString("token", "");
+        String token = "Bearer " + sharedPreferences.getString("token", "");
 
-        Call<String> call = apiService.uploadImage(token , body);
+        Call<String> call = apiService.uploadImage(token, body);
 
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, retrofit2.Response<String> response) {
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
                     Toast.makeText(addProduct.this, "OK", Toast.LENGTH_SHORT).show();
                 } else Toast.makeText(addProduct.this, "!OK", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
-              //  Toast.makeText(getActivity(), "Đm Đ ổn rồi", Toast.LENGTH_SHORT).show();
+                //  Toast.makeText(getActivity(), "Đm Đ ổn rồi", Toast.LENGTH_SHORT).show();
                 t.printStackTrace();
             }
         });

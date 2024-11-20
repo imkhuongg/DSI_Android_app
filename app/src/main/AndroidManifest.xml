@@ -34,6 +34,7 @@
         <activity android:name=".views.MainScreen.shopManage.ShopManage" android:exported="false"/>
         <activity android:name=".views.MainScreen.shopManage.addProduct" android:exported="false"/>
         <activity android:name=".views.MainScreen.shopManage.itemProductDetailManage" android:exported="false" />
+        <activity android:name=".views.MainScreen.shopManage.updateProductActivity" android:exported="false"/>
     </application>
 
 </manifest>

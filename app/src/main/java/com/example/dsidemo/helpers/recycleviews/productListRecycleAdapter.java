@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.dsidemo.R;
 import com.example.dsidemo.ViewModel.ShopManageViewModel;
+import com.example.dsidemo.helpers.APILinkHelper;
 import com.example.dsidemo.models.product;
 import com.example.dsidemo.views.MainScreen.shopManage.itemProductDetailManage;
 
@@ -88,7 +89,7 @@ public class productListRecycleAdapter extends RecyclerView.Adapter<productListR
     public void onBindViewHolder(@NonNull productListRecycleAdapter.productListViewHolder holder, int position) {
         product product = productList.get(position);
         Glide.with(holder.itemView.getContext())
-                .load(productList.get(position).getThumb())
+                .load(APILinkHelper.getIMG() + productList.get(position).getThumb())
                 .override(200, 300)
                 .into(holder.img_product);
         holder.nameProduct_txt.setText(productList.get(position).getName_product());
