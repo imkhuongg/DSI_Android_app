@@ -93,8 +93,8 @@ public class SignUpAvtivity extends AppCompatActivity {
             }
         });
     }
-    public void gotoTerm(){
-        Intent intent = new Intent(SignUpAvtivity.this , termActivity.class);
+    public void gotoLogin(){
+        Intent intent = new Intent(SignUpAvtivity.this , LoginActivity.class);
         startActivity(intent);
         finish();
     }
@@ -103,7 +103,7 @@ public class SignUpAvtivity extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 Toast.makeText(SignUpAvtivity.this, "Đăng ký thành công", Toast.LENGTH_SHORT).show();
-                finish();
+                gotoLogin();
             }
         }, new Response.ErrorListener() {
             @Override

@@ -237,15 +237,10 @@ public class addProduct extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create()).build();
         File file = new File(path);
         RequestBody requestfile = RequestBody.create(MediaType.parse("image/*"), file);
-
         MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), requestfile);
-
         ApiService apiService = retrofit.create(ApiService.class);
-
         String token = "Bearer " + sharedPreferences.getString("token", "");
-
         Call<String> call = apiService.uploadImage(token, body);
-
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, retrofit2.Response<String> response) {

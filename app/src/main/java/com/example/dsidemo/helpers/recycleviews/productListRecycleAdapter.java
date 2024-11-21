@@ -66,10 +66,6 @@ public class productListRecycleAdapter extends RecyclerView.Adapter<productListR
             brandName_txt = itemView.findViewById(R.id.dateReserved_txt);
             rate_txt = itemView.findViewById(R.id.state_txt);
 
-            state_btn = itemView.findViewById(R.id.state_btn);
-            cancel_btn = itemView.findViewById(R.id.cancel_btn);
-
-
         }
     }
 

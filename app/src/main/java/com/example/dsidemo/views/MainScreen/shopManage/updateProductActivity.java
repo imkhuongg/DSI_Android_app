@@ -26,18 +26,31 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import com.android.volley.RequestQueue;
+import com.android.volley.VolleyError;
 import com.bumptech.glide.Glide;
 import com.example.dsidemo.R;
 import com.example.dsidemo.helpers.APILinkHelper;
 import com.example.dsidemo.helpers.RealPathUtil;
 import com.example.dsidemo.helpers.StringResourceHelper;
+import com.example.dsidemo.helpers.api.ApiService;
 import com.example.dsidemo.helpers.helper;
 import com.example.dsidemo.models.product;
+import com.example.dsidemo.repository.productRepository;
 import com.example.dsidemo.utils.MySingleton;
+
+import java.io.File;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class updateProductActivity extends AppCompatActivity {
     private ImageView btnback,imgProduct;
-    private Button btn_imgUpload,btn_addProduct;
+    private Button btn_imgUpload,btn_updateProduct;
     private ActivityResultLauncher<Intent> resultLauncher;
     private static final int PICK_IMAGE_REQUEST = 1;
     private Uri imageUri;
@@ -52,6 +65,8 @@ public class updateProductActivity extends AppCompatActivity {
     private String path;
     private product getProduct;
     private int flag = 0;
+    String postThumb;
+    private productRepository productRepository;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,7 +77,7 @@ public class updateProductActivity extends AppCompatActivity {
         btnback = findViewById(R.id.btn_back);
         btn_imgUpload = findViewById(R.id.btn_imgUpload);
         imgProduct = findViewById(R.id.imgProduct);
-        btn_addProduct = findViewById(R.id.btn_addProduct);
+        btn_updateProduct = findViewById(R.id.btn_addProduct);
 
         //EditText
         txt_description = findViewById(R.id.txt_description);
@@ -91,6 +106,7 @@ public class updateProductActivity extends AppCompatActivity {
         Glide.with(updateProductActivity.this)
                 .load(APILinkHelper.getIMG()+getProduct.getThumb())
                 .into(imgProduct);
+        postThumb = getProduct.getThumb();
 
         registerResult();
         //OnClịckEvent
@@ -103,6 +119,7 @@ public class updateProductActivity extends AppCompatActivity {
         btn_imgUpload.setOnClickListener(v -> {
             openFileChooser();
         });
+        btn_updateProduct.setOnClickListener(v -> {updateProduct();});
 
         sharedPreferences = getSharedPreferences(StringResourceHelper.getUserDetailPrefName() , Context.MODE_PRIVATE);
         requestQueue = MySingleton.getInstance(getBaseContext()).getRequestQueue();
@@ -127,10 +144,10 @@ public class updateProductActivity extends AppCompatActivity {
 
                             imgProduct.setVisibility(View.VISIBLE);
                             path = RealPathUtil.getRealPath(updateProductActivity.this , imageUri);
-
+                            postThumb = getProduct.getProduct_id() + "/" + nameImg;
                             bitmapImg = BitmapFactory.decodeFile(path);
                             imgProduct.setImageBitmap(bitmapImg);
-
+                            uplaodIMG();
                             Toast.makeText(getBaseContext(), "name IMG: " + nameImg, Toast.LENGTH_SHORT).show();
 
                         }
@@ -149,5 +166,48 @@ public class updateProductActivity extends AppCompatActivity {
         } else {
             return null;
         }
+    }
+    public void updateProduct(){
+        String token = sharedPreferences.getString("tpken", "");
+        productRepository = new productRepository();
+        productRepository.updateProduct(String.valueOf(getProduct.getProduct_id()), txt_nameBrand.getText().toString(), txt_price.getText().toString(), txt_description.getText().toString(), txt_nameBrand.getText().toString(), postThumb, token, requestQueue, new productRepository.StringCallback() {
+            @Override
+            public void onResponse(String response) {
+                Toast.makeText(updateProductActivity.this, "Sửa sản phẩm thành công", Toast.LENGTH_SHORT).show();
+                Intent intent =  new Intent(updateProductActivity.this , ShopManage.class);
+                startActivity(intent);
+                finish();
+            }
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(updateProductActivity.this, "Có lỗi xảy ra khi sửa sản phẩm", Toast.LENGTH_SHORT).show();
+                error.printStackTrace();
+            }
+        });
+    }
+    public void uplaodIMG() {
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(APILinkHelper.getBaseURL())
+                .addConverterFactory(GsonConverterFactory.create()).build();
+        File file = new File(path);
+        RequestBody requestfile = RequestBody.create(MediaType.parse("image/*"), file);
+        MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), requestfile);
+        ApiService apiService = retrofit.create(ApiService.class);
+        String token = "Bearer " + sharedPreferences.getString("token", "");
+        Call<String> call = apiService.uploadImage(token, body);
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, retrofit2.Response<String> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(updateProductActivity.this, "OK", Toast.LENGTH_SHORT).show();
+                } else Toast.makeText(updateProductActivity.this, "!OK", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                //  Toast.makeText(getActivity(), "Đm Đ ổn rồi", Toast.LENGTH_SHORT).show();
+                t.printStackTrace();
+            }
+        });
     }
 }

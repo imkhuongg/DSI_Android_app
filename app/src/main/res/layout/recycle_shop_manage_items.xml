@@ -31,7 +31,7 @@
                 android:id="@+id/img_product"
                 android:layout_width="100dp"
                 android:layout_height="120dp"
-                android:scaleType="fitCenter"
+                android:scaleType="centerCrop"
                 android:src="@drawable/vay_2"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHorizontal_bias="0"
@@ -41,7 +41,7 @@
             <TextView
                 android:id="@+id/nameProduct_txt"
                 android:layout_width="0dp"
-                app:layout_constraintWidth_percent="0.35"
+                app:layout_constraintWidth_percent="0.6"
                 android:layout_height="wrap_content"
 
 
@@ -118,51 +118,19 @@
                 app:layout_constraintLeft_toRightOf="@id/g1"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/dateReserved_txt" />
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/state_btn"
-                android:layout_width="0dp"
-                app:layout_constraintWidth_percent="0.25"
-                android:layout_height="35dp"
+            <com.google.android.material.imageview.ShapeableImageView
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
 
-
-                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/cancel_btn"
-                app:layout_constraintHorizontal_bias="0.95"
-                app:layout_constraintVertical_chainStyle="packed"
-
-
-                android:text="Chỉnh sửa"
-                android:backgroundTint="@color/MainColor"
-                app:cornerRadius="15dp"
-                android:textColor="@color/white"
-                android:textAllCaps="false"
-                android:textSize="8sp"
-
-                />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/cancel_btn"
-                android:layout_width="0dp"
-                android:layout_height="35dp"
-                android:backgroundTint="@color/white"
-
-                android:text="Xoá"
-                android:textAllCaps="false"
-                android:textColor="@color/MainColor"
-                android:textSize="8sp"
-
-                app:cornerRadius="15dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintHorizontal_bias="0.95"
-                app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/state_btn"
-                app:layout_constraintWidth_percent="0.25"
-                app:strokeColor="@color/MainColor"
+                app:layout_constraintHorizontal_bias="0.98"
 
-                app:strokeWidth="1dp" />
+                android:src="@drawable/icon_next"
+                android:scaleType="centerCrop"
+                />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 
