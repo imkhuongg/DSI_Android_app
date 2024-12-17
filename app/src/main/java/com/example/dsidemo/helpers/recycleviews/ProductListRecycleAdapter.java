@@ -22,14 +22,14 @@ import com.example.dsidemo.views.MainScreen.shopManage.itemProductDetailManage;
 
 import java.util.List;
 
-public class productListRecycleAdapter extends RecyclerView.Adapter<productListRecycleAdapter.productListViewHolder> {
+public class ProductListRecycleAdapter extends RecyclerView.Adapter<ProductListRecycleAdapter.productListViewHolder> {
 
     List<product> productList;
     Context context;
     private ShopManageViewModel viewModel;
     private AdapterView.OnItemClickListener listener;
 
-    public productListRecycleAdapter(List<product> productList, Context context, ShopManageViewModel viewModel ) {
+    public ProductListRecycleAdapter(List<product> productList, Context context, ShopManageViewModel viewModel ) {
         this.productList = productList;
         this.context = context;
         this.viewModel = viewModel;
@@ -71,7 +71,7 @@ public class productListRecycleAdapter extends RecyclerView.Adapter<productListR
 
     @NonNull
     @Override
-    public productListRecycleAdapter.productListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ProductListRecycleAdapter.productListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycle_shop_manage_items , parent ,false);
         productListViewHolder holder = new productListViewHolder(view);
 
@@ -82,7 +82,7 @@ public class productListRecycleAdapter extends RecyclerView.Adapter<productListR
     }
 
     @Override
-    public void onBindViewHolder(@NonNull productListRecycleAdapter.productListViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ProductListRecycleAdapter.productListViewHolder holder, int position) {
         product product = productList.get(position);
         Glide.with(holder.itemView.getContext())
                 .load(APILinkHelper.getIMG() + productList.get(position).getThumb())

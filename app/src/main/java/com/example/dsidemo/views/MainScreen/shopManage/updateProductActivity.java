@@ -170,7 +170,7 @@ public class updateProductActivity extends AppCompatActivity {
     public void updateProduct(){
         String token = sharedPreferences.getString("tpken", "");
         productRepository = new productRepository();
-        productRepository.updateProduct(String.valueOf(getProduct.getProduct_id()), txt_nameBrand.getText().toString(), txt_price.getText().toString(), txt_description.getText().toString(), txt_nameBrand.getText().toString(), postThumb, token, requestQueue, new productRepository.StringCallback() {
+        productRepository.updateProduct(String.valueOf(getProduct.getProduct_id()), txt_name.getText().toString(), txt_price.getText().toString(), txt_description.getText().toString(), txt_nameBrand.getText().toString(), postThumb, token, requestQueue, new productRepository.StringCallback() {
             @Override
             public void onResponse(String response) {
                 Toast.makeText(updateProductActivity.this, "Sửa sản phẩm thành công", Toast.LENGTH_SHORT).show();

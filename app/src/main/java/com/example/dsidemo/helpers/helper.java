@@ -3,6 +3,7 @@ package com.example.dsidemo.helpers;
 import android.content.Intent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -15,7 +16,7 @@ public class helper extends AppCompatActivity {
                 switch (motionEvent.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         // Giảm opacity khi bấm vào
-                        view.animate().alpha(0.5f).setDuration(10).start();
+                        view.animate().alpha(0.5f).setDuration(500).start();
                         break;
 
                     case MotionEvent.ACTION_UP:
@@ -44,6 +45,46 @@ public class helper extends AppCompatActivity {
             hideSystemUI(getWindow().getDecorView());
         }
 
+    }
+    public static void setAlphaScrollView(View view , ImageView btn_delete , ImageView btn_edit){
+        view.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                switch (motionEvent.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        btn_delete.setAlpha(0.5f);
+                        btn_edit.setAlpha(0.5f);
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+                    case MotionEvent.ACTION_CANCEL:
+                        btn_delete.setAlpha(1.0f);
+                        btn_edit.setAlpha(1.0f);
+                        break;
+                }
+                return false;
+            }
+        });
+    }
+    public static void setAlphaScrollView(View view , ImageView btn_1){
+        view.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                switch (motionEvent.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        btn_1.setAlpha(0.5f);
+
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+                    case MotionEvent.ACTION_CANCEL:
+                        btn_1.setAlpha(1.0f);
+
+                        break;
+                }
+                return false;
+            }
+        });
     }
 
 }

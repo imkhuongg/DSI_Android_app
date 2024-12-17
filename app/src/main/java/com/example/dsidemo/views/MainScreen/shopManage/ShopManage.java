@@ -4,18 +4,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,13 +19,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.volley.RequestQueue;
 import com.example.dsidemo.R;
 import com.example.dsidemo.ViewModel.ShopManageViewModel;
-import com.example.dsidemo.helpers.APILinkHelper;
 import com.example.dsidemo.helpers.StringResourceHelper;
 import com.example.dsidemo.helpers.helper;
-import com.example.dsidemo.helpers.recycleviews.productListRecycleAdapter;
+import com.example.dsidemo.helpers.recycleviews.ProductListRecycleAdapter;
 import com.example.dsidemo.models.product;
 import com.example.dsidemo.utils.MySingleton;
-import com.example.dsidemo.views.MainScreen.MainScreen;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
@@ -41,7 +35,7 @@ public class ShopManage extends AppCompatActivity {
 
     private SharedPreferences preferences;
     private ProgressBar progressBar;
-    private  productListRecycleAdapter productListRecycleAdapter;
+    private ProductListRecycleAdapter productListRecycleAdapter;
     private  RecyclerView recyclerView;
     private List<product> productList;
     private TextView NoneProduct_txt;
@@ -100,16 +94,17 @@ public class ShopManage extends AppCompatActivity {
     }
 
     public void getShopperProduct(){
-        progressBar.setVisibility(View.GONE);
+
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         String token = preferences.getString("token" , "");
         shopManageViewModel = new ViewModelProvider(this).get(ShopManageViewModel.class);
         shopManageViewModel.getProductShopManage(requestQueue , token);
-        productListRecycleAdapter = new productListRecycleAdapter(new ArrayList<>() ,this,shopManageViewModel);
+        productListRecycleAdapter = new ProductListRecycleAdapter(new ArrayList<>() ,this,shopManageViewModel);
 
         shopManageViewModel.getProducts().observe(this,products -> {
             productListRecycleAdapter.setProductList(products);
         } );
+        progressBar.setVisibility(View.GONE);
         recyclerView.setAdapter(productListRecycleAdapter);
         recyclerView.setVisibility(View.VISIBLE);
     }

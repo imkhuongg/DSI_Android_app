@@ -1,12 +1,16 @@
 package com.example.dsidemo.views.MainScreen.shopManage;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +43,7 @@ public class itemProductDetailManage extends AppCompatActivity {
     private EditText txt_description;
     private ImageView img_product,btn_back;
     private FloatingActionButton btn_edit , btn_delete;
+    private ScrollView ctn_product;
 
     private ShopManageViewModel shopManageViewModel;
 
@@ -67,6 +72,8 @@ public class itemProductDetailManage extends AppCompatActivity {
         btn_back = findViewById(R.id.btn_back);
         btn_edit = findViewById(R.id.btn_edit);
         btn_delete = findViewById(R.id.btn_delete);
+
+        ctn_product = findViewById(R.id.ctn_product);
 
         helper.setTouchEffect(btn_back);
         helper.hideSystemUI(getWindow().getDecorView());
@@ -104,6 +111,24 @@ public class itemProductDetailManage extends AppCompatActivity {
             intent1.putExtra("productModel" , prod);
             startActivity(intent1);
             finish();
+        });
+        ctn_product.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                switch (motionEvent.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        btn_delete.setAlpha(0.5f);
+                        btn_edit.setAlpha(0.5f);
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+                    case MotionEvent.ACTION_CANCEL:
+                        btn_delete.setAlpha(1.0f);
+                        btn_edit.setAlpha(1.0f);
+                        break;
+                }
+                return false;
+            }
         });
         
     }

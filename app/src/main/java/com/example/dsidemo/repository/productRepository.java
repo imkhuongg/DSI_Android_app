@@ -1,10 +1,6 @@
 package com.example.dsidemo.repository;
 
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
@@ -16,13 +12,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.dsidemo.helpers.APILinkHelper;
-import com.example.dsidemo.helpers.StringResourceHelper;
 import com.example.dsidemo.models.product;
 import com.android.volley.Request;
-import com.example.dsidemo.views.MainScreen.shopManage.ShopManage;
-import com.example.dsidemo.views.MainScreen.shopManage.itemProductDetailManage;
+
+
 
 import org.json.JSONArray;
 import org.json.JSONException;
