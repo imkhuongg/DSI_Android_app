@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:fitsSystemWindows="true"
+    android:layout_height="match_parent">
+    <androidx.constraintlayout.widget.Guideline
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/g1"
+        app:layout_constraintGuide_percent="0.5"
+        />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/g2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.8" />
+    <androidx.constraintlayout.widget.Guideline
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/g3"
+        app:layout_constraintGuide_percent="0.1"
+        />
+    <TextView
+        android:id="@+id/btnNext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=">>"
+
+        android:textColor="#4682fa"
+        android:textSize="22sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="0.99"
+        android:clickable="true"
+        />
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="0dp"
+        app:layout_constraintVertical_chainStyle="packed"
+        android:layout_height="wrap_content"
+        app:layout_constraintWidth_percent="0.5"
+        android:layout_marginBottom="14dp"
+        app:layout_constraintBottom_toTopOf="@+id/relativeLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/g3"
+        android:adjustViewBounds="true"
+        app:srcCompat="@drawable/icon_logo"
+    />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/relativeLayout"
+        app:layout_constraintVertical_chainStyle="packed"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        android:background="@drawable/login_textfield"
+        android:elevation="15dp"
+        android:orientation="vertical"
+        android:padding="25dp"
+        app:layout_constraintBottom_toTopOf="@id/helpTxt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.49"
+
+        app:layout_constraintStart_toStartOf="parent"
+
+        app:layout_constraintTop_toBottomOf="@id/imageView"
+        app:layout_constraintWidth_percent="0.9">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="Email/Số điện thoại/Tên đăng nhập"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/UsernameTxt"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/UsernameTxt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:boxBackgroundColor="@color/white"
+            app:layout_constraintTop_toBottomOf="@id/textView"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/textView2">
+            <EditText
+                android:id="@+id/UsernameTxtContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="text"
+                android:paddingLeft="10dp"
+                android:text=""
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/UsernameTxt"
+
+
+            app:layout_constraintTop_toBottomOf="@id/UsernameTxt"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/passtxt"
+            android:text="Mật khẩu"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/passtxt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintBottom_toTopOf="@id/textView3"
+            app:layout_constraintTop_toBottomOf="@id/textView2"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:boxBackgroundColor="@color/white"
+            app:layout_constraintRight_toRightOf="parent">
+            <EditText
+                android:id="@+id/passtxtContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView2"
+                android:password="true"
+                android:ems="10"
+                android:inputType="text"
+                android:paddingLeft="10dp"
+                android:text=""
+
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Quên mật khẩu?"
+
+            android:textColor="#4682fa"
+            app:layout_constraintTop_toBottomOf="@id/passtxt"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/button"
+            android:clickable="true"
+
+            android:layout_alignEnd="@id/passtxt"
+
+            />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button"
+            android:layout_width="0dp"
+            android:layout_height="55dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:text="Đăng nhập"
+            android:backgroundTint="@color/button_color_state"
+            app:layout_constraintWidth_percent="0.75"
+            app:layout_constraintTop_toBottomOf="@+id/textView3"
+
+            android:layout_centerHorizontal="true"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:layout_marginTop="20dp"
+            android:textAllCaps="false"
+            android:enabled="false"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/helpTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Trợ giúp?"
+
+
+        app:layout_constraintTop_toBottomOf="@id/relativeLayout"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/g1"
+        app:layout_constraintHorizontal_bias="0.3"
+        android:layout_marginTop="10dp"
+        android:textColor="#4682fa"
+        android:clickable="true"
+        />
+    <TextView
+        android:id="@+id/SignUpTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Đăng ký ngay?"
+        app:layout_constraintTop_toBottomOf="@id/relativeLayout"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/g1"
+        app:layout_constraintBottom_toTopOf="@id/textView"
+        app:layout_constraintHorizontal_bias="0.7"
+
+        android:layout_marginTop="5dp"
+        android:textColor="#4682fa"
+        android:clickable="true"
+        />
+    <TextView
+        android:id="@id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hoặc đăng nhập với"
+        app:layout_constraintTop_toBottomOf="@id/helpTxt"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+
+        android:textColor="#9c9b98"
+        android:layout_marginTop="10dp" />
+    <ImageView
+        android:id="@+id/facebook_icon"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@drawable/icon_facebook"
+        app:layout_constraintHorizontal_chainStyle="packed"
+       app:layout_constraintTop_toBottomOf="@id/g2"
+       app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/gmail_icon"
+        app:layout_constraintWidth_percent="0.1"
+        app:layout_constraintHeight_percent="0.05"
+
+        android:layout_marginEnd="8dp"
+        android:clickable="true" />
+    <ImageView
+        android:id="@+id/gmail_icon"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@drawable/icon_gmail"
+
+        app:layout_constraintTop_toBottomOf="@id/g2"
+        app:layout_constraintLeft_toRightOf="@id/facebook_icon"
+        app:layout_constraintWidth_percent="0.1"
+        app:layout_constraintHeight_percent="0.05"
+        android:background="@drawable/ripple_click"
+        app:layout_constraintRight_toLeftOf="@id/zalo_icon"
+        android:layout_marginEnd="8dp"/>
+    <ImageView
+        android:id="@+id/zalo_icon"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@drawable/icon_zalo"
+
+        app:layout_constraintTop_toBottomOf="@id/g2"
+        app:layout_constraintLeft_toRightOf="@id/gmail_icon"
+        app:layout_constraintWidth_percent="0.1"
+        app:layout_constraintHeight_percent="0.05"
+
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginEnd="8dp"
+        android:clickable="true"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

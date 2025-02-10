@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/g1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.03"
+        />
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/btn_back"
+        android:layout_width="0dp"
+        app:layout_constraintWidth_percent="0.2"
+        android:layout_height="40dp"
+
+        app:layout_constraintTop_toBottomOf="@+id/g1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/label1"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintHorizontal_bias="0"
+
+        android:src="@drawable/icon_back"
+        android:clickable="true"
+        />
+    <TextView
+        android:id="@+id/label1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintTop_toBottomOf="@id/g1"
+        app:layout_constraintLeft_toRightOf="@id/btn_back"
+        app:layout_constraintRight_toRightOf="parent"
+
+        android:text="Chi tiết\nđơn hàng"
+        android:textColor="@color/MainColor"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        />
+
+    <ScrollView
+        android:id="@+id/ctn_product"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:paddingBottom="20dp"
+
+        app:layout_constraintHeight_percent="0.9"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/label1"
+        app:layout_constraintVertical_bias="0.0">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/g11"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.07"
+                />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@id/img_product"
+                android:layout_width="0dp"
+                android:layout_height="400dp"
+                app:layout_constraintWidth_percent="0.88"
+                android:layout_marginTop="20dp"
+                android:elevation="10dp"
+
+                android:scaleType="centerCrop"
+                android:src="@drawable/vay_2"
+                app:layout_constraintCircleRadius="20dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/txt_nameProduct"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+
+                app:cardCornerRadius="100dp"
+                app:shapeAppearance="@style/CircularShape" />
+            <TextView
+                android:id="@+id/txt_nameProduct"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="10dp"
+                
+                app:layout_constraintTop_toBottomOf="@id/img_product"
+                app:layout_constraintLeft_toRightOf="@id/g11"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintBottom_toTopOf="@id/txt_nameBrand"
+
+                android:text="NAME PRODUCT"
+                android:textSize="20sp"
+                android:textAllCaps="true"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                
+                />
+            <TextView
+                android:id="@+id/txt_nameBrand"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                app:layout_constraintTop_toBottomOf="@id/txt_nameProduct"
+                app:layout_constraintLeft_toRightOf="@id/g11"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/txt_idProduct"
+                app:layout_constraintHorizontal_bias="0"
+
+                android:text="Thương hiệu"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                />
+            <TextView
+                android:id="@+id/txt_idProduct"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+
+                app:layout_constraintTop_toBottomOf="@id/txt_nameBrand"
+                app:layout_constraintLeft_toRightOf="@id/g11"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/txt_price"
+                app:layout_constraintHorizontal_bias="0"
+
+                android:text="Mã sản phẩm"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                />
+            <TextView
+                android:id="@+id/txt_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+
+                app:layout_constraintTop_toBottomOf="@id/txt_idProduct"
+                app:layout_constraintLeft_toRightOf="@id/g11"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/txt_rate"
+                app:layout_constraintHorizontal_bias="0"
+
+                android:text="18000000đ"
+                android:textSize="22sp"
+                android:textColor="@color/MainColor"
+                android:textStyle="bold"
+
+                />
+            <TextView
+                android:id="@+id/txt_rate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+
+                app:layout_constraintTop_toBottomOf="@id/txt_price"
+                app:layout_constraintLeft_toRightOf="@id/g11"
+                app:layout_constraintRight_toLeftOf="@id/icon_star"
+                app:layout_constraintBottom_toTopOf="@id/ctn_desciption"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintHorizontal_chainStyle="packed"
+
+                android:text="5/5"
+                android:textColor="@color/black"
+                android:textSize="17sp"
+                />
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/icon_star"
+                android:layout_width="40dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="2dp"
+
+                app:layout_constraintLeft_toRightOf="@id/txt_rate"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/txt_price"
+
+                android:src="@drawable/icon_star"
+                android:scaleType="centerCrop"
+
+                />
+            <androidx.cardview.widget.CardView
+                android:id="@+id/ctn_desciption"
+                android:layout_width="0dp"
+                app:layout_constraintWidth_percent="0.88"
+                android:layout_height="wrap_content"
+
+                app:layout_constraintTop_toBottomOf="@id/txt_rate"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/txt_createdAt"
+
+                app:cardCornerRadius="10dp"
+                app:cardElevation="10dp"
+                android:layout_marginTop="15dp"
+
+                >
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:id="@+id/label_description"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+
+                        app:layout_constraintBottom_toTopOf="@id/ctn_descriptionTxt"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintHorizontal_bias="0.1"
+
+                        android:text="Mô tả sản phẩm"
+                        android:textColor="@color/MainColor"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+
+                        />
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/ctn_descriptionTxt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+
+                        app:boxBackgroundMode="none"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/label_description"
+                        app:layout_constraintBottom_toBottomOf="parent"
+
+                        app:hintTextColor="@color/MainColor"
+                        android:textColorHint="@color/HintColor"
+                        >
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/txt_description"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:backgroundTint="@color/white"
+                            android:gravity="top|start"
+                            android:enabled="false"
+                            android:inputType="textMultiLine"
+                            android:minLines="1"
+                            android:overScrollMode="always"
+                            android:text="desciption"
+                            android:textColor="@color/descipColor"
+                            android:scrollbars="vertical" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+            <TextView
+                android:id="@+id/txt_createdAt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+
+                app:layout_constraintTop_toBottomOf="@id/ctn_desciption"
+                app:layout_constraintLeft_toRightOf="@id/g11"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/txt_updatedAt"
+                app:layout_constraintHorizontal_bias="0"
+
+                android:text="Created at"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                />
+            <TextView
+                android:id="@+id/txt_updatedAt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+
+                app:layout_constraintTop_toBottomOf="@id/txt_createdAt"
+                app:layout_constraintLeft_toRightOf="@id/g11"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintHorizontal_bias="0"
+
+                android:text="Updated at"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btn_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintVertical_bias="0.98"
+
+        android:backgroundTint="@color/white"
+        android:src="@drawable/icon_edit"
+        app:tint="@color/MainColor"
+
+        />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btn_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintHorizontal_bias="0.05"
+        app:layout_constraintVertical_bias="0.98"
+
+        android:src="@drawable/icon_delete"
+        android:backgroundTint="@color/white"
+        app:tint="@color/MainColor"
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>
