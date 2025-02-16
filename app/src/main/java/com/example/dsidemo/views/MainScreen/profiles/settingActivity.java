@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.RequestQueue;
 import com.example.dsidemo.R;
 import com.example.dsidemo.helpers.StringResourceHelper;
 import com.example.dsidemo.helpers.helper;
@@ -23,6 +24,8 @@ public class settingActivity extends AppCompatActivity {
     private SharedPreferences preferences;
     private Button btn_logout;
     private ImageView btn_back;
+    private RequestQueue requestQueue;
+
 
 
 

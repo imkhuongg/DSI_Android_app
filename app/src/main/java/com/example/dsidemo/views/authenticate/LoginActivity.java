@@ -20,6 +20,7 @@ import com.example.dsidemo.helpers.APILinkHelper;
 import com.example.dsidemo.helpers.StringResourceHelper;
 import com.example.dsidemo.helpers.helper;
 import com.example.dsidemo.helpers.validation.LoginValidationHelper;
+import com.example.dsidemo.repository.ShopperRepository;
 import com.example.dsidemo.utils.MySingleton;
 import com.example.dsidemo.views.MainScreen.MainScreen;
 import com.example.dsidemo.views.termActivity;
@@ -44,6 +45,7 @@ public class LoginActivity extends AppCompatActivity {
     private TextInputLayout emailTxtlayout,passwordLayout;
     private EditText loginField,passwordField;
     private Button loginBtn;
+    private ShopperRepository shopperRepository;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -89,6 +91,7 @@ public class LoginActivity extends AppCompatActivity {
 
         processLogin();
 
+
         NextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -111,8 +114,60 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 authenticateUser(loginField.getText().toString(), passwordField.getText().toString());
+                CheckShopper();
             }
         });
+    }
+
+    public void CheckShopper(){
+        preferences = getSharedPreferences(StringResourceHelper.getUserDetailPrefName(), MODE_PRIVATE);
+        String token = preferences.getString("token" , "");
+        shopperRepository = new ShopperRepository();
+        SharedPreferences sharedPreferences = getSharedPreferences(StringResourceHelper.getShopperInfo() , MODE_PRIVATE);
+        int check = shopperRepository.CheckShopper(token, requestQueue, new ShopperRepository.StringCallback() {
+            @Override
+            public void onResponse(String response) {
+
+            }
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        if(check == 0){
+            editor.putBoolean("ishopper", false);
+        } else{
+            shopperRepository.getShopper(token, requestQueue, new ShopperRepository.ObjectCallback() {
+                @Override
+                public void onSuccess(JSONObject shoppers) {
+                    try {
+                        editor.putBoolean("ishopper", true);
+                        editor.putInt("shopper_id", shoppers.getInt("shopper_id"));
+                        editor.putInt("user_id" , shoppers.getInt("user_id"));
+                        editor.putString("name_shop" , shoppers.getString("name_shop"));
+                        editor.putString("email" , shoppers.getString("email"));
+                        editor.putString("avatar" , shoppers.getString("avatar"));
+                        editor.putInt("phone" , shoppers.getInt("phone"));
+                        editor.putString("shop_address" , shoppers.getString("shop_address"));
+                        editor.putInt("follower" , shoppers.getInt("follower"));
+                        editor.putInt("total_sold" , shoppers.getInt("total_sold"));
+                        editor.putLong("total_revenue" , shoppers.getLong("total_revenue"));
+                        editor.putString("created_at" , shoppers.getString("created_at"));
+                        editor.putString("updated_at" , shoppers.getString("updated_at"));
+                    }catch (JSONException e){
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onError(VolleyError error) {
+                    error.printStackTrace();
+                }
+            });
+        }
+
     }
 
     public void gotoRegister(){
@@ -120,6 +175,7 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
 
     public void gotoMainActivityAuthenticated(){
         Intent intent = new Intent(LoginActivity.this, MainScreen.class);

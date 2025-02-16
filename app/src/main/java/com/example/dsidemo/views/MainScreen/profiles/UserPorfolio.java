@@ -9,16 +9,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.VolleyError;
 import com.example.dsidemo.R;
 import com.example.dsidemo.helpers.StringResourceHelper;
 import com.example.dsidemo.helpers.helper;
+import com.example.dsidemo.repository.ShopperRepository;
 import com.example.dsidemo.views.MainScreen.MainScreen;
+import com.example.dsidemo.views.MainScreen.shopManage.NewShopperActivity;
 import com.example.dsidemo.views.MainScreen.shopManage.ShopManage;
 import com.google.android.material.button.MaterialButton;
 
@@ -28,12 +33,13 @@ public class UserPorfolio extends AppCompatActivity {
     private ImageView settingBtn,btn_extract,btn_delivery,btn_shipping,btn_rating,btn_back;
     private TextView nameUser;
     private SharedPreferences preferences;
+    private RequestQueue requestQueue;
+    private ShopperRepository shopperRepository;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile_layout);
-
 
     //Button
         btn_userInfo = findViewById(R.id.btn_userInfo);
@@ -67,6 +73,16 @@ public class UserPorfolio extends AppCompatActivity {
         helper.hideSystemUI(getWindow().getDecorView());
 
 
+        preferences = getSharedPreferences(StringResourceHelper.getShopperInfo() , MODE_PRIVATE);
+        boolean check = preferences.getBoolean("isShopper" , false);
+        if(check == false){
+            btn_shop_manage.setText("Đăng ký trở thành người bán hàng");
+            btn_shop_manage.setIconPadding(-35);
+        } else{
+            btn_shop_manage.setText("Quản lý bán hàng");
+        }
+
+
         settingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -83,8 +99,12 @@ public class UserPorfolio extends AppCompatActivity {
         btn_shop_manage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(UserPorfolio.this , ShopManage.class);
-                startActivity(intent);
+                if(check == false){
+                    Intent intent = new Intent(UserPorfolio.this, NewShopperActivity.class);
+                    startActivity(intent);
+                } else{
+                    Intent intent = new Intent(UserPorfolio.this , ShopManage.class);
+                }
             }
         });
         btn_back.setOnClickListener(new View.OnClickListener() {

@@ -43,6 +43,7 @@ public class ShopManage extends AppCompatActivity {
     private FloatingActionButton addbtn;
     private ImageView btn_back , btn_ShopPorfolio;
     private ShopManageViewModel  ShopManageViewModel;
+    private TextView quantitySold, Txt_Profits,txt_follower,txt_quantityRate;
 
     private ShopManageViewModel shopManageViewModel;
 
@@ -54,6 +55,8 @@ public class ShopManage extends AppCompatActivity {
     productList = new ArrayList<>();
         requestQueue = MySingleton.getInstance(this).getRequestQueue();
         preferences = getSharedPreferences(StringResourceHelper.getUserDetailPrefName() , Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences(StringResourceHelper.getShopperInfo(), MODE_PRIVATE);
+
 
         //RecyclerView
         recyclerView = findViewById(R.id.listProduct);
@@ -61,6 +64,10 @@ public class ShopManage extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar);
         //txt
         NoneProduct_txt = findViewById(R.id.NoneProduct_txt);
+        quantitySold = findViewById(R.id.quantitySold);
+        Txt_Profits = findViewById(R.id.Txt_Profits);
+        txt_follower = findViewById(R.id.txt_follower);
+        txt_quantityRate = findViewById(R.id.txt_quantityRate);
         //btn
         addbtn = findViewById(R.id.add_btn);
         //IMGView
@@ -72,6 +79,11 @@ public class ShopManage extends AppCompatActivity {
 
         helper.setTouchEffect(btn_back);
         helper.hideSystemUI(getWindow().getDecorView());
+
+        quantitySold.setText(sharedPreferences.getInt("total_sold",0));
+        Txt_Profits.setText(String.valueOf(sharedPreferences.getLong("total_revenue",0)));
+        txt_follower.setText(sharedPreferences.getInt("follower",0));
+
 
         getShopperProduct();
 

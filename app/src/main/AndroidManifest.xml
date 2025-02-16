@@ -41,6 +41,8 @@
         <activity android:name=".views.MainScreen.shopManage.EditShopProfile.EditEmailShopActivity" android:exported="false"/>
         <activity android:name=".views.MainScreen.shopManage.EditShopProfile.EditNameShopActivity" android:exported="false"/>
         <activity android:name=".views.MainScreen.shopManage.EditShopProfile.EditPhoneShopActivity" android:exported="false"/>
+        <activity android:name=".views.MainScreen.shopManage.NewShopperActivity" android:exported="false" />
+        <activity android:name=".views.MainScreen.shopManage.addShopperActivity" android:exported="false"/>
     </application>
 
 </manifest>

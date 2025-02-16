@@ -1,6 +1,5 @@
 package com.example.dsidemo.helpers;
 
-import android.content.Intent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
