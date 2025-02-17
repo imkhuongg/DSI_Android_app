@@ -104,6 +104,7 @@ public class UserPorfolio extends AppCompatActivity {
                     startActivity(intent);
                 } else{
                     Intent intent = new Intent(UserPorfolio.this , ShopManage.class);
+                    startActivity(intent);
                 }
             }
         });

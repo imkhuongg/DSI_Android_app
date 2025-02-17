@@ -67,10 +67,19 @@ public class settingActivity extends AppCompatActivity {
 
     public void clearPreference(){
         preferences= getSharedPreferences(StringResourceHelper.getUserDetailPrefName(), Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences(StringResourceHelper.getShopperInfo(),MODE_PRIVATE);
+        Context context = getApplicationContext();
+        String userDetailPrefName = StringResourceHelper.getUserDetailPrefName();
+        String shopperInfo = StringResourceHelper.getShopperInfo();
+        boolean deletedUserDetail = context.deleteSharedPreferences(userDetailPrefName);
+        boolean deletedShopperInfo = context.deleteSharedPreferences(shopperInfo);
         if(preferences.getBoolean("authenticated" , false)){
             SharedPreferences.Editor editor = preferences.edit();
+            SharedPreferences.Editor editor1 = sharedPreferences.edit();
             editor.clear();
             editor.apply();
+            editor1.clear();
+            editor1.apply();;
         }
 
     }

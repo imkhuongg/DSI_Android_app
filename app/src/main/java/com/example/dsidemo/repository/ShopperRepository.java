@@ -3,6 +3,8 @@ package com.example.dsidemo.repository;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import androidx.annotation.Nullable;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -36,44 +38,47 @@ public class ShopperRepository {
         void onResponse(String response);
         void onErrorResponse(VolleyError error);
     }
+    public interface IntCallback{
+        void onResponse(int response);
+        void onErrorResponse(VolleyError error);
+    }
 
     public ShopperRepository(){}
-    public int CheckShopper(String token , RequestQueue requestQueue, final StringCallback callback){
-        final int[] check = {0};
+    public void CheckShopper(String token , RequestQueue requestQueue, final IntCallback callback){
 
-       StringRequest stringRequest = new StringRequest(Request.Method.POST, APILinkHelper.CheckShopper(), new Response.Listener<String>() {
-           @Override
-           public void onResponse(String response) {
-               try {
-                   JSONObject jsonObject = new JSONObject(response);
-                   check[0] = jsonObject.getInt("isShopper");
-               } catch (JSONException e) {
-                   throw new RuntimeException(e);
-               }
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, APILinkHelper.CheckShopper(), null, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    try {
+                        int check = response.getInt("isShopper");
 
-               callback.onResponse(response);
-           }
-       }, new Response.ErrorListener() {
-           @Override
-           public void onErrorResponse(VolleyError error) {
-               callback.onErrorResponse(error);
-           }
-       }){
-           @Override
-           public Map<String, String> getHeaders() throws AuthFailureError {
-               Map<String,String> headers = new HashMap<>();
-               headers.put("Authorization", "Bearer " + token);
-               return headers;
-           }
-       };
-        requestQueue.add(stringRequest);
-        return check[0];
+                       callback.onResponse(check);
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    callback.onErrorResponse(error);
+                }
+            }){
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String,String> headers = new HashMap<>();
+                    headers.put("Authorization", "Bearer " + token);
+                    headers.put("content-type", "application/json");
+                    return headers;
+                }
+            };
+        requestQueue.add(jsonObjectRequest);
+
     }
 
     public Shopper getShopper(String token , RequestQueue requestQueue , final ObjectCallback callback){
         final Shopper[] shopper = new Shopper[1];
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, APILinkHelper.getShopper(), null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, APILinkHelper.getShopper(), null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
@@ -90,6 +95,7 @@ public class ShopperRepository {
                             response.getString("created_at"),
                             response.getString("updated_at")
                             );
+                    callback.onSuccess(response);
                 }catch (JSONException e){
                     e.printStackTrace();
                 }
@@ -112,26 +118,37 @@ public class ShopperRepository {
         return shopper[0];
     }
 
-    public void ShopperRegistration(String name_shop, String email, String avatar,int phone,String shop_address,String token, RequestQueue requestQueue , StringCallback stringCallback){
+    public void ShopperRegistration(String token,String name_shop,String email,String phone,String shop_address, RequestQueue requestQueue, final StringCallback callback){
         StringRequest stringRequest = new StringRequest(Request.Method.POST, APILinkHelper.ShopperRegistration(), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                stringCallback.onResponse(response);
+                callback.onResponse(response);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                stringCallback.onErrorResponse(error);
+                callback.onErrorResponse(error);
             }
         }){
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String ,String> params = new HashMap<>();
+                Map<String,String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + token);
+                return headers;
+            }
 
-
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> params = new HashMap<>();
+                params.put("name_shop",name_shop);
+                params.put("email", email);
+                params.put("phone",phone);
+                params.put("shop_address",shop_address);
                 return params;
             }
         };
+        requestQueue.add(stringRequest);
     }
 
 }

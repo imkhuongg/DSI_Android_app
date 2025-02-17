@@ -114,59 +114,65 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 authenticateUser(loginField.getText().toString(), passwordField.getText().toString());
-                CheckShopper();
+
             }
         });
     }
 
-    public void CheckShopper(){
+    public void CheckShopper(String token){
         preferences = getSharedPreferences(StringResourceHelper.getUserDetailPrefName(), MODE_PRIVATE);
-        String token = preferences.getString("token" , "");
+        int check = 0;
         shopperRepository = new ShopperRepository();
-        SharedPreferences sharedPreferences = getSharedPreferences(StringResourceHelper.getShopperInfo() , MODE_PRIVATE);
-        int check = shopperRepository.CheckShopper(token, requestQueue, new ShopperRepository.StringCallback() {
+        SharedPreferences sharedPreferences1 = getSharedPreferences(StringResourceHelper.getShopperInfo() , MODE_PRIVATE);
+        shopperRepository.CheckShopper(token, requestQueue, new ShopperRepository.IntCallback() {
             @Override
-            public void onResponse(String response) {
+            public void onResponse(int response) {
+                Toast.makeText(LoginActivity.this, "" + response, Toast.LENGTH_SHORT).show();
+                if(response == 0){
+                    SharedPreferences.Editor editor = sharedPreferences1.edit();
+                    editor.putBoolean("isShopper", false);
+                } else{
+                    shopperRepository.getShopper(token, requestQueue, new ShopperRepository.ObjectCallback() {
+                        @Override
+                        public void onSuccess(JSONObject shoppers) {
+                            SharedPreferences.Editor editor = sharedPreferences1.edit();
+                            try {
+                                editor.putBoolean("isShopper", true);
+                                editor.putInt("shopper_id", shoppers.getInt("shopper_id"));
+                                editor.putInt("user_id" , shoppers.getInt("user_id"));
+                                editor.putString("name_shop" , shoppers.getString("name_shop"));
+                                editor.putString("email" , shoppers.getString("email"));
+                                editor.putString("avatar" , shoppers.getString("avatar"));
+                                editor.putInt("phone" , shoppers.getInt("phone"));
+                                editor.putString("shop_address" , shoppers.getString("shop_address"));
+                                editor.putInt("follower" , shoppers.getInt("follower"));
+                                editor.putInt("total_sold" , shoppers.getInt("total_sold"));
+                                editor.putLong("total_revenue" , shoppers.getLong("total_revenue"));
+                                editor.putString("created_at" , shoppers.getString("created_at"));
+                                editor.putString("updated_at" , shoppers.getString("updated_at"));
+                                editor.apply();
 
+                            }catch (JSONException e){
+                                e.printStackTrace();
+                            }
+                        }
+
+                        @Override
+                        public void onError(VolleyError error) {
+                            error.printStackTrace();
+                        }
+                    });
+                }
             }
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
+
             }
         });
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        if(check == 0){
-            editor.putBoolean("ishopper", false);
-        } else{
-            shopperRepository.getShopper(token, requestQueue, new ShopperRepository.ObjectCallback() {
-                @Override
-                public void onSuccess(JSONObject shoppers) {
-                    try {
-                        editor.putBoolean("ishopper", true);
-                        editor.putInt("shopper_id", shoppers.getInt("shopper_id"));
-                        editor.putInt("user_id" , shoppers.getInt("user_id"));
-                        editor.putString("name_shop" , shoppers.getString("name_shop"));
-                        editor.putString("email" , shoppers.getString("email"));
-                        editor.putString("avatar" , shoppers.getString("avatar"));
-                        editor.putInt("phone" , shoppers.getInt("phone"));
-                        editor.putString("shop_address" , shoppers.getString("shop_address"));
-                        editor.putInt("follower" , shoppers.getInt("follower"));
-                        editor.putInt("total_sold" , shoppers.getInt("total_sold"));
-                        editor.putLong("total_revenue" , shoppers.getLong("total_revenue"));
-                        editor.putString("created_at" , shoppers.getString("created_at"));
-                        editor.putString("updated_at" , shoppers.getString("updated_at"));
-                    }catch (JSONException e){
-                        e.printStackTrace();
-                    }
-                }
 
-                @Override
-                public void onError(VolleyError error) {
-                    error.printStackTrace();
-                }
-            });
-        }
+
+
 
     }
 
@@ -203,6 +209,7 @@ public class LoginActivity extends AppCompatActivity {
                             editor.putString("token" , response.getString("token"));
                             editor.putBoolean("authenticated" , true);
                             editor.apply();
+                            CheckShopper(response.getString("token"));
 
                             gotoMainActivityAuthenticated();
                         }catch (JSONException e){

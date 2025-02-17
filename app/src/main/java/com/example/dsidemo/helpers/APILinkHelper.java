@@ -27,6 +27,6 @@ public static String getBaseURL(){
     public static String updateProduct(){return BASE_URL + "product/update";}
     public static String getAllProduct(){return BASE_URL + "product/productsAll";}
     public static String CheckShopper(){return BASE_URL + "shopper/check";}
-    public static String getShopper(){return BASE_URL + "shopper/";}
+    public static String getShopper(){return BASE_URL + "shopper/getShopper";}
     public static String ShopperRegistration(){return BASE_URL + "shopper/Registration";}
 }

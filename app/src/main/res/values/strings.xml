@@ -10,4 +10,13 @@
     <string name="payment_desc">TThanh toán thuận tiện và an toàn chỉ với 1 nút bấm và không giới hạn</string>
     <string name="pay_everywhere_title">Thanh toán bất cứ đâu</string>
     <string name="pay_everywhere_desc">Chỉ cần có mạng bạn có thể quản lý dòng tiền của mình mọi lúc mọi nơi</string>
+    <!--Button-->
+    <string name="continute">Tiếp tục</string>
+    <!--shopper-->
+    <string name="name_shop">Tên cửa hàng</string>
+    <string name="email">email</string>
+    <string name="phone">Số điện thoại</string>
+    <string name="shop_address">Địa chỉ cửa hàng</string>
+    <string name="confirm">Xác nhận</string>
+
 </resources>

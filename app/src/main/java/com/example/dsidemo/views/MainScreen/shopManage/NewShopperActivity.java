@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.utils.widget.ImageFilterButton;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.dsidemo.R;
@@ -20,7 +21,8 @@ public class NewShopperActivity extends AppCompatActivity {
 
     ViewPager mSlideViewPager;
     LinearLayout mDotLayout;
-    Button btn_back,btn_next;
+    ImageFilterButton btn_back,btn_next;
+    Button btn_skip;
 
     TextView[] dots;
     ViewPagerAdapter viewPagerAdapter;
@@ -30,14 +32,16 @@ public class NewShopperActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_newshopper);
 
-
-
+        //BUTTON
+        btn_skip = findViewById(R.id.btn_skip);
         btn_back = findViewById(R.id.btn_back);
         btn_next = findViewById(R.id.btn_next);
 
         helper.hideSystemUI(getWindow().getDecorView());
         helper.setTouchEffect(btn_back);
         helper.setTouchEffect(btn_next);
+
+
 
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,12 +54,28 @@ public class NewShopperActivity extends AppCompatActivity {
         btn_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(getItem(0) < 3) mSlideViewPager.setCurrentItem(getItem(1) , true);
-                else{
-                    Intent i = new Intent(NewShopperActivity.this, addShopperActivity.class );
-                    startActivity(i);
-                    finish();
+                if(getItem(0) < 3) {
+                    mSlideViewPager.setCurrentItem(getItem(1) , true);
+                } else{
+                    btn_next.setVisibility(View.INVISIBLE);
                 }
+                if(getItem(0) == 3){
+                    btn_skip.setEnabled(true);
+                    btn_skip.setVisibility(View.VISIBLE);
+                    btn_next.setVisibility(View.INVISIBLE);
+                } else{
+                    btn_skip.setVisibility(View.GONE);
+                }
+
+            }
+        });
+        btn_skip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(NewShopperActivity.this, addShopperActivity.class);
+                startActivity(intent);
+                finish();
+
             }
         });
 
@@ -75,7 +95,7 @@ public class NewShopperActivity extends AppCompatActivity {
 
         for(int i = 0 ; i< dots.length ; i++){
             dots[i] = new TextView(this);
-            dots[i].setText(Html.fromHtml("&#8266"));
+            dots[i].setText("\u2022");
             dots[i].setTextSize(35);
             dots[i].setTextColor(getResources().getColor(R.color.inactive,getApplicationContext().getTheme()));
             mDotLayout.addView(dots[i]);
@@ -94,7 +114,19 @@ public class NewShopperActivity extends AppCompatActivity {
 
             if(position > 0){
                 btn_back.setVisibility(View.VISIBLE);
-            } else btn_back.setVisibility(View.INVISIBLE);
+                btn_skip.setVisibility(View.GONE);
+                btn_next.setVisibility(View.VISIBLE);
+            }
+            else {
+                btn_back.setVisibility(View.INVISIBLE);
+                btn_next.setVisibility(View.VISIBLE);
+            };
+
+            if (position == 3){
+                btn_next.setVisibility(View.INVISIBLE);
+                btn_skip.setEnabled(true);
+                btn_skip.setVisibility(View.VISIBLE);
+            }
         }
 
         @Override

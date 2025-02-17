@@ -80,9 +80,9 @@ public class ShopManage extends AppCompatActivity {
         helper.setTouchEffect(btn_back);
         helper.hideSystemUI(getWindow().getDecorView());
 
-        quantitySold.setText(sharedPreferences.getInt("total_sold",0));
+        quantitySold.setText(String.valueOf(sharedPreferences.getInt("total_sold",0)));
         Txt_Profits.setText(String.valueOf(sharedPreferences.getLong("total_revenue",0)));
-        txt_follower.setText(sharedPreferences.getInt("follower",0));
+        txt_follower.setText(String.valueOf(sharedPreferences.getInt("follower",0)));
 
 
         getShopperProduct();
