@@ -1,10 +1,24 @@
 package com.example.dsidemo.helpers;
 
+import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.dsidemo.views.MainScreen.shopManage.addProduct;
 
 public class helper extends AppCompatActivity {
     public helper(){}
@@ -85,5 +99,21 @@ public class helper extends AppCompatActivity {
             }
         });
     }
+    public static void  openFileChooser(ActivityResultLauncher<Intent> resultLauncher) {
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        resultLauncher.launch(intent);
+    }
+    public static String getImageName(Uri uri , Context context) {
+        String[] projection = {MediaStore.Images.Media.DISPLAY_NAME};
+        Cursor cursor = context.getContentResolver().query(uri, projection, null, null, null);
 
+        if (cursor != null && cursor.moveToFirst()) {
+            int columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DISPLAY_NAME);
+            String imageName = cursor.getString(columnIndex);
+            cursor.close();
+            return imageName;
+        } else {
+            return null;
+        }
+    }
 }

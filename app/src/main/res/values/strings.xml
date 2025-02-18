@@ -18,5 +18,7 @@
     <string name="phone">Số điện thoại</string>
     <string name="shop_address">Địa chỉ cửa hàng</string>
     <string name="confirm">Xác nhận</string>
+    <string name="choose_img">Chọn ảnh</string>
+    <string name="save">Lưu</string>
 
 </resources>

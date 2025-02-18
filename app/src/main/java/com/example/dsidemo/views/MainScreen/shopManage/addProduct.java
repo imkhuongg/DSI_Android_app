@@ -251,7 +251,7 @@ public class addProduct extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
-                //  Toast.makeText(getActivity(), "Đm Đ ổn rồi", Toast.LENGTH_SHORT).show();
+
                 t.printStackTrace();
             }
         });

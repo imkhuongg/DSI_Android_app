@@ -150,5 +150,34 @@ public class ShopperRepository {
         };
         requestQueue.add(stringRequest);
     }
+    public void UpdateAvatar(String token, String avatar, RequestQueue requestQueue, StringCallback callback){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, APILinkHelper.ShopperUpdateAvatar(), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                callback.onResponse(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                callback.onErrorResponse(error);
+            }
+        }){
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> params = new HashMap<>();
+                params.put("avatar", avatar);
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String,String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + token);
+                return headers;
+            }
+        };
+        requestQueue.add(stringRequest);
+    }
 
 }

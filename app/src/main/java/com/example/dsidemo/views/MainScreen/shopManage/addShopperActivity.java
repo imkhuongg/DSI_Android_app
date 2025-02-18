@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -35,6 +36,7 @@ public class addShopperActivity extends AppCompatActivity {
     private SharedPreferences sharedPreferences;
     private RequestQueue requestQueue;
     private ProgressBar progressBar;
+    private ImageView btn_back;
 
 
     @Override
@@ -54,6 +56,7 @@ public class addShopperActivity extends AppCompatActivity {
         layout_shopAdress = findViewById(R.id.layout_shopAdress);
         //BUTTON
         btn_confirm = findViewById(R.id.btn_confirm);
+        btn_back = findViewById(R.id.btn_back);
 
         progressBar = findViewById(R.id.progress);
 
@@ -73,6 +76,12 @@ public class addShopperActivity extends AppCompatActivity {
             public void onClick(View view) {
                 progressBar.setVisibility(View.VISIBLE);
                 ShopperRegistration();
+            }
+        });
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
             }
         });
     }

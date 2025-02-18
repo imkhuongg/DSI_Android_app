@@ -43,6 +43,7 @@
         <activity android:name=".views.MainScreen.shopManage.EditShopProfile.EditPhoneShopActivity" android:exported="false"/>
         <activity android:name=".views.MainScreen.shopManage.NewShopperActivity" android:exported="false" />
         <activity android:name=".views.MainScreen.shopManage.addShopperActivity" android:exported="false"/>
+        <activity android:name=".views.MainScreen.shopManage.AddShopperAvatarActivity" android:exported="false"/>
     </application>
 
 </manifest>

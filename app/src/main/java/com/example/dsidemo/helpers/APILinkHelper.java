@@ -29,4 +29,5 @@ public static String getBaseURL(){
     public static String CheckShopper(){return BASE_URL + "shopper/check";}
     public static String getShopper(){return BASE_URL + "shopper/getShopper";}
     public static String ShopperRegistration(){return BASE_URL + "shopper/Registration";}
+    public static String ShopperUpdateAvatar(){return BASE_URL + "shopper/updateAvatar";}
 }
