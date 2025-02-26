@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="BottomNavItemTextAppearance">
+        <item name="android:lineSpacingExtra">18dp</item> <!-- Thay đổi khoảng cách dòng -->
+        <item name="android:paddingTop">8dp</item> <!-- Padding trên -->
+    </style>
+    <style name="CircularImageView">
+        <item name="shapeAppearanceOverlay">@style/CircularShape</item>
+    </style>
+
+    <style name="CircularShape">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">5%</item>
+    </style>
+</resources>

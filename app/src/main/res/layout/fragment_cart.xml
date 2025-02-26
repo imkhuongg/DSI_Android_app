@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/g1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.02"
+        />
+    <TextView
+        android:id="@+id/label1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+
+        app:layout_constraintTop_toBottomOf="@id/g1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/ctn_search"
+
+
+        android:text="Mua \nsắm"
+        android:textSize="18sp"
+        android:textColor="@color/MainColor"
+        android:textStyle="bold"
+        />
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/btn_porfolio"
+        android:layout_width="60dp"
+        android:layout_height="55dp"
+
+        app:layout_constraintTop_toBottomOf="@id/g1"
+        app:layout_constraintLeft_toRightOf="@id/ctn_search"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="1"
+
+        android:src="@drawable/icon_porfolio"
+        android:clickable="true"
+        />
+
+    <com.google.android.material.textfield.TextInputLayout
+
+        android:id="@+id/ctn_search"
+        android:layout_width="0dp"
+        app:layout_constraintWidth_percent="0.5"
+        android:layout_height="50dp"
+
+        app:layout_constraintTop_toBottomOf="@id/g1"
+        app:layout_constraintLeft_toRightOf="@id/label1"
+        app:layout_constraintRight_toLeftOf="@id/btn_porfolio"
+
+        app:boxStrokeColor="@color/MainColor"
+        app:boxStrokeWidth="1dp"
+
+
+        app:boxCornerRadiusTopStart="20dp"
+        app:boxCornerRadiusTopEnd="20dp"
+        app:boxCornerRadiusBottomStart="20dp"
+        app:boxCornerRadiusBottomEnd="20dp"
+        app:boxBackgroundMode="outline"
+
+
+        app:hintTextColor="@color/MainColor"
+        android:hint="Nhâp tên sản phẩm "
+        android:textColorHint="@color/HintColor"
+
+        >
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:textSize="14sp"
+            android:backgroundTint="@color/white"
+            android:textColor="@color/black"
+            android:clickable="true"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+    <TextView
+        android:id="@+id/label_product"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+
+        app:layout_constraintTop_toBottomOf="@id/ctn_search"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintBottom_toTopOf="@id/scroll_products"
+
+
+
+        android:text="Sản phẩm"
+        android:textSize="16sp"
+        android:textColor="@color/MainColor"
+        android:textStyle="bold"
+        />
+
+    <ScrollView
+        android:id="@+id/scroll_products"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintHeight_percent="0.9"
+
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/label_product">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/txt_noMoreProducts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:text="Không có sản phẩm nào"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:visibility="gone"
+
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+
+                app:layout_constraintTop_toTopOf="parent"
+
+                />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/ctn_products"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:nestedScrollingEnabled="false"
+                android:padding="0dp"
+
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent="0.9" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+    <ProgressBar
+        android:id="@+id/loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btn_cart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/icon_cart"
+        android:layout_marginEnd="12dp"
+        android:backgroundTint="@color/white"
+        android:layout_marginBottom="15dp"
+        app:tint="@color/MainColor"
+        app:maxImageSize="120dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

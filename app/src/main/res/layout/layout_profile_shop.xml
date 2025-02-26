@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gTop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.02"
+        />
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/btn_back"
+        android:layout_width="60dp"
+        android:layout_height="40dp"
+
+        app:layout_constraintTop_toBottomOf="@id/gTop"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/label1"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintHorizontal_bias="0"
+
+        android:src="@drawable/icon_back"
+
+        />
+    <TextView
+        android:id="@+id/label1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintTop_toBottomOf="@id/gTop"
+        app:layout_constraintLeft_toRightOf="@id/btn_back"
+        app:layout_constraintRight_toRightOf="parent"
+
+        android:text="Sửa thông\ntin cửa hàng"
+        android:textColor="@color/MainColor"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/ctn_avatar"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginTop="15dp"
+
+        app:layout_constraintTop_toBottomOf="@id/btn_back"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/ctn_fullnameShop"
+
+        android:background="@color/MainColor"
+        >
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/img_avatar"
+            android:layout_width="0dp"
+            app:layout_constraintWidth_percent="0.4"
+            android:layout_height="0dp"
+            app:layout_constraintHeight_percent="0.9"
+
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+
+            android:scaleType="centerCrop"
+            android:src="@drawable/icon_porfolio"
+
+
+            android:clickable="true"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/ctn_fullnameShop"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+
+        app:layout_constraintTop_toBottomOf="@+id/ctn_avatar"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/ctn_email"
+
+        app:strokeWidth="1dp"
+        app:strokeColor="@color/lightGray"
+
+        android:clickable="true"
+
+        >
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias="0.05"
+
+                android:text="Tên cửa hàng"
+                android:textColor="@color/MainColor"
+                android:textSize="13sp"
+                />
+            <TextView
+                android:id="@+id/txt_nameShop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/btn_continute"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintHorizontal_bias="0.97"
+
+                android:text="Name Shop"
+                android:textSize="13sp"
+                android:textColor="@color/MainColor"
+                />
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/btn_continute"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+
+                app:layout_constraintLeft_toRightOf="@id/txt_nameShop"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+
+                android:src="@drawable/icon_foward"
+                />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/ctn_email"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+
+        app:layout_constraintTop_toBottomOf="@+id/ctn_fullnameShop"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/ctn_phone"
+
+        app:strokeWidth="1dp"
+        app:strokeColor="@color/lightGray"
+
+        android:clickable="true"
+
+        >
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias="0.05"
+
+                android:text="Email"
+                android:textColor="@color/MainColor"
+                android:textSize="13sp"
+                />
+            <TextView
+                android:id="@+id/txt_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/btn_continute_email"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintHorizontal_bias="0.97"
+
+                android:text="Email"
+                android:textSize="13sp"
+                android:textColor="@color/MainColor"
+                />
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/btn_continute_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+
+                app:layout_constraintLeft_toRightOf="@id/txt_email"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+
+                android:src="@drawable/icon_foward"
+                />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/ctn_phone"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+
+        app:layout_constraintTop_toBottomOf="@+id/ctn_email"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/ctn_address"
+
+        app:strokeWidth="1dp"
+        app:strokeColor="@color/lightGray"
+
+        android:clickable="true"
+
+        >
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias="0.05"
+
+                android:text="Số điện thoại"
+                android:textColor="@color/MainColor"
+                android:textSize="13sp"
+                />
+            <TextView
+                android:id="@+id/txt_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/btn_continute_phone"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintHorizontal_bias="0.97"
+
+                android:text="phone number"
+                android:textSize="13sp"
+                android:textColor="@color/MainColor"
+                />
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/btn_continute_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+
+                app:layout_constraintLeft_toRightOf="@id/txt_phone"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+
+                android:src="@drawable/icon_foward"
+                />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/ctn_address"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+
+        app:layout_constraintTop_toBottomOf="@+id/ctn_phone"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btn_updateShop"
+
+        app:strokeWidth="1dp"
+        app:strokeColor="@color/lightGray"
+
+        android:clickable="true"
+
+        >
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias="0.05"
+
+                android:text="Địa chỉ"
+                android:textColor="@color/MainColor"
+                android:textSize="13sp"
+                />
+            <TextView
+                android:id="@+id/txt_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/btn_continute_address"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintHorizontal_bias="0.97"
+
+                android:text=""
+                android:textSize="13sp"
+                android:textColor="@color/MainColor"
+                />
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/btn_continute_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+
+                app:layout_constraintLeft_toRightOf="@id/txt_address"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+
+                android:src="@drawable/icon_foward"
+                />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_updateShop"
+        android:layout_width="0dp"
+        app:layout_constraintWidth_percent="0.8"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+
+        app:layout_constraintTop_toBottomOf="@id/ctn_address"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+
+        android:backgroundTint="@color/MainColor"
+        app:cornerRadius="10dp"
+
+        android:text="Cập nhật"
+        android:textColor="@color/white"
+        android:textAllCaps="false"
+
+
+
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>
