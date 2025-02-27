@@ -1,5 +1,6 @@
 package com.example.dsidemo.views.MainScreen.shopManage;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -15,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.example.dsidemo.R;
+import com.example.dsidemo.events.CloseSellerRegisterEvent;
 import com.example.dsidemo.helpers.StringResourceHelper;
 import com.example.dsidemo.helpers.helper;
 import com.example.dsidemo.helpers.validation.AddShopperValidation;
@@ -23,6 +25,8 @@ import com.example.dsidemo.utils.MySingleton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -84,6 +88,8 @@ public class addShopperActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        EventBus.getDefault().register(this);
     }
 
     public void ShopperRegistration(){
@@ -129,6 +135,7 @@ public class addShopperActivity extends AppCompatActivity {
                     }
                 });
                 Toast.makeText(addShopperActivity.this, "Tạo mới người bán hàng thành công", Toast.LENGTH_SHORT).show();
+                gotoAddAvatarShopper();
             }
 
             @Override
@@ -137,5 +144,20 @@ public class addShopperActivity extends AppCompatActivity {
                 Toast.makeText(addShopperActivity.this, "Có lỗi xảy ra khi thêm mới", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+    public void gotoAddAvatarShopper(){
+        Intent intent = new Intent(addShopperActivity.this, AddShopperAvatarActivity.class);
+        startActivity(intent);
+    }
+    @Subscribe
+    public void onCloseEvent(CloseSellerRegisterEvent event) {
+        finish(); // Đóng ActivityA
+    }
+
+    @Override
+    protected void onDestroy() {
+        // Hủy đăng ký để tránh memory leak
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
     }
 }

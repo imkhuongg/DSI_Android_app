@@ -10,12 +10,14 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.example.dsidemo.helpers.APILinkHelper;
 import com.example.dsidemo.helpers.StringResourceHelper;
 import com.example.dsidemo.models.Shopper;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -42,6 +44,10 @@ public class ShopperRepository {
     }
     public interface IntCallback{
         void onResponse(int response);
+        void onErrorResponse(VolleyError error);
+    }
+    public interface ArrayListCallback{
+        void onResponse(JSONArray response);
         void onErrorResponse(VolleyError error);
     }
 
@@ -193,6 +199,28 @@ public class ShopperRepository {
             }
         };
         requestQueue.add(jsonObjectRequest);
+    }
+
+    public void getHintList(String token,String name_product, RequestQueue requestQueue, ArrayListCallback callback){
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, APILinkHelper.ShopperSearchHints() + name_product, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                callback.onResponse(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                callback.onErrorResponse(error);
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String,String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + token);
+                return headers;
+            }
+        };
+        requestQueue.add(jsonArrayRequest);
     }
 
 }

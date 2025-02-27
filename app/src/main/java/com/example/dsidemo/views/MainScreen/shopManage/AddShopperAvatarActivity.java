@@ -25,6 +25,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.example.dsidemo.R;
+import com.example.dsidemo.events.CloseSellerRegisterEvent;
 import com.example.dsidemo.helpers.APILinkHelper;
 import com.example.dsidemo.helpers.RealPathUtil;
 import com.example.dsidemo.helpers.StringResourceHelper;
@@ -32,6 +33,9 @@ import com.example.dsidemo.helpers.helper;
 import com.example.dsidemo.repository.ShopperRepository;
 import com.example.dsidemo.repository.UploadIMGRepository;
 import com.example.dsidemo.utils.MySingleton;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -108,6 +112,8 @@ public class AddShopperAvatarActivity extends AppCompatActivity {
             }
         });
 
+        EventBus.getDefault().register(this);
+
     }
     private void registerResult() {
 
@@ -125,9 +131,6 @@ public class AddShopperAvatarActivity extends AppCompatActivity {
 
                             bitmapImg = BitmapFactory.decodeFile(path);
                             img_avatar.setImageBitmap(bitmapImg);
-
-
-
                         }
                     }
                 });
@@ -151,7 +154,6 @@ public class AddShopperAvatarActivity extends AppCompatActivity {
                 Intent intent = new Intent(AddShopperAvatarActivity.this, ShopProfile.class);
                 finish();
                 startActivity(intent);
-
             }
 
             @Override
@@ -161,5 +163,16 @@ public class AddShopperAvatarActivity extends AppCompatActivity {
             }
         });
         }
+    }
+    @Subscribe
+    public void onCloseEvent(CloseSellerRegisterEvent event) {
+        finish(); // Đóng ActivityB
+    }
+
+    @Override
+    protected void onDestroy() {
+        // Hủy đăng ký để tránh memory leak
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
     }
 }

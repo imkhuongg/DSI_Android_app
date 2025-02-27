@@ -1,7 +1,7 @@
 package com.example.dsidemo.helpers;
 
 public class APILinkHelper {
-    private static final String BASE_URL = "http://172.19.201.12:8008/api/v1/";
+    private static final String BASE_URL = "http://192.168.0.101:8008/api/v1/";
 
 public static String getBaseURL(){
     return BASE_URL;
@@ -25,4 +25,6 @@ public static String getBaseURL(){
     public static String ShopperRegistration(){return BASE_URL + "shopper/Registration";}
     public static String ShopperUpdateAvatar(){return BASE_URL + "shopper/updateAvatar";}
     public static String Shopper(){return BASE_URL + "shopper";}
+    public static String ShopperSearchHints(){return BASE_URL + "shopper/hint/";}
+    public static String SearchResult(){return BASE_URL + "shopper/search/";}
 }

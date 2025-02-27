@@ -24,5 +24,6 @@
     <string name="status_product">Trạng thái đơn hàng</string>
     <string name="customer_support">Hỗ trợ khách hàng</string>
     <string name="shop_coupon">Quản lý mã giảm giá</string>
+    <string name="search_nameProduct">Nhập tên sản phẩm</string>
 
 </resources>

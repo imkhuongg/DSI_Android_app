@@ -21,11 +21,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.volley.RequestQueue;
 import com.example.dsidemo.R;
 import com.example.dsidemo.ViewModel.ShopManageViewModel;
+import com.example.dsidemo.helpers.APILinkHelper;
 import com.example.dsidemo.helpers.StringResourceHelper;
 import com.example.dsidemo.helpers.helper;
 import com.example.dsidemo.helpers.recycleviews.ProductListRecycleAdapter;
 import com.example.dsidemo.models.product;
 import com.example.dsidemo.utils.MySingleton;
+import com.example.dsidemo.views.MainScreen.shopManage.Searchs.SearchProductActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
@@ -47,7 +49,7 @@ public class ShopManage extends AppCompatActivity {
     private ShopManageViewModel  ShopManageViewModel;
     private TextView quantitySold, Txt_Profits,txt_follower,txt_quantityRate;
     private ScrollView scroll;
-    private Button btn_coupon,btn_productConfirm,btn_statusProduct,btn_support;
+    private Button btn_coupon,btn_productConfirm,btn_statusProduct,btn_support,btn_search;
 
 
 
@@ -82,6 +84,7 @@ public class ShopManage extends AppCompatActivity {
         btn_productConfirm = findViewById(R.id.btn_productConfirm);
         btn_statusProduct = findViewById(R.id.btn_statusProduct);
         btn_support = findViewById(R.id.btn_support);
+        btn_search = findViewById(R.id.btn_search);
 
         //IMGView
         btn_back = findViewById(R.id.btn_back);
@@ -98,7 +101,6 @@ public class ShopManage extends AppCompatActivity {
         quantitySold.setText(String.valueOf(sharedPreferences.getInt("total_sold",0)));
         Txt_Profits.setText(String.valueOf(sharedPreferences.getLong("total_revenue",0)));
         txt_follower.setText(String.valueOf(sharedPreferences.getInt("follower",0)));
-
 
         getShopperProduct();
 
@@ -125,7 +127,13 @@ public class ShopManage extends AppCompatActivity {
                 finish();
             }
         });
-
+        btn_search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ShopManage.this, SearchProductActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 
@@ -134,7 +142,7 @@ public class ShopManage extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         String token = preferences.getString("token" , "");
         shopManageViewModel = new ViewModelProvider(this).get(ShopManageViewModel.class);
-        shopManageViewModel.getProductShopManage(requestQueue , token);
+        shopManageViewModel.getProductShopManage(requestQueue , token, APILinkHelper.Product());
         productListRecycleAdapter = new ProductListRecycleAdapter(new ArrayList<>() ,this,shopManageViewModel);
 
         shopManageViewModel.getProducts().observe(this,products -> {

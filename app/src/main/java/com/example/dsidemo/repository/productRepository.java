@@ -35,10 +35,10 @@ public class productRepository {
 
     public productRepository() {}
 
-    public LiveData<List<product>> getProductShopper(RequestQueue queue,String token,final RepositoryCallback callback) {
+    public LiveData<List<product>> getProductShopper(RequestQueue queue,String token,String url,final RepositoryCallback callback) {
         MutableLiveData<List<product>> liveData = new MutableLiveData<>();
 
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, APILinkHelper.Product(), null, new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 List<product> products = new ArrayList<>();

@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
+import com.example.dsidemo.helpers.APILinkHelper;
 import com.example.dsidemo.models.product;
 import com.example.dsidemo.repository.productRepository;
 
@@ -30,8 +31,8 @@ public class ShopManageViewModel extends ViewModel {
         return selectedProduct;
     }
 
-    public void getProductShopManage(RequestQueue queue, String token){
-        productRepository.getProductShopper(queue, token, new productRepository.RepositoryCallback() {
+    public void getProductShopManage(RequestQueue queue, String token,String url){
+        productRepository.getProductShopper(queue, token, url,new productRepository.RepositoryCallback() {
             @Override
             public void onSuccess(List<product> productList) {
                 products.setValue(productList);
