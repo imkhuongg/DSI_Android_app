@@ -50,9 +50,6 @@ public class MainScreen extends AppCompatActivity {
                 case R.id.edit_manocanh:
                     selectedFragment = new EditManocanhFragment();
                     break;
-                case R.id.news:
-                    selectedFragment = new NewsFragment();
-                    break;
                 case R.id.instruction:
                     selectedFragment = new InstructionFragment();
                     break;

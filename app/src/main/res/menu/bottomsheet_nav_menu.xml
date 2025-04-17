@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/edit_manocanh" android:title="Manocanh" android:icon="@drawable/chinh_sua_manocanh" />
-    <item android:id="@+id/news" android:title="Tin tức" android:icon="@drawable/icon_ban_tin" />
+    <item android:id="@+id/edit_manocanh" android:title="Phối đồ" android:icon="@drawable/chinh_sua_manocanh" />
     <item android:id="@+id/instruction" android:title="Hướng dẫn sử dụng" android:icon="@drawable/icon_tuvansd" />
     <item android:id="@+id/cart" android:title="Cửa hàng" android:icon="@drawable/icon_shop" />
 </menu>

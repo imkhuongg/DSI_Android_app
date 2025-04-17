@@ -1,71 +1,111 @@
 package com.example.dsidemo.views.MainScreen.Component;
 
+import static android.view.View.INVISIBLE;
+
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import com.example.dsidemo.R;
+import com.example.dsidemo.events.CloseSellerRegisterEvent;
+import com.example.dsidemo.helpers.RealPathUtil;
 import com.example.dsidemo.helpers.helper;
+import com.example.dsidemo.repository.UploadIMGRepository;
 import com.example.dsidemo.views.MainScreen.MainScreen;
 import com.example.dsidemo.views.MainScreen.profiles.UserPorfolio;
+import com.example.dsidemo.views.MainScreen.shopManage.AddShopperAvatarActivity;
+import com.google.android.material.imageview.ShapeableImageView;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 public class EditManocanhFragment extends Fragment {
 
-    private ImageView porfolio, chon_vay_ngan, chon_dang,chon_toc,chon_vay_dai,chon_ao,chon_quan,chon_giay,chon_kinh,chon_tui,chon_khuyen_tai;
-    private Button navModel;
-    MainScreen mainScreen;
+    private ConstraintLayout btn_pose, btn_cloth;
+    private ImageView img_pose;
+    private UploadIMGRepository uploadIMGRepository;
+    private Uri imageUri;
+    private String nameImg;
+    private Bitmap bitmapImg;
+    private String path;
+    private ActivityResultLauncher<Intent> resultLauncher;
+    private ProgressBar loading;
 
-    @Nullable
+    private boolean isPose = true;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        resultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result != null && result.getData() != null) {
+                        imageUri = result.getData().getData();
+                        nameImg = helper.getImageName(imageUri, getContext());
+                        path = RealPathUtil.getRealPath(getContext(), imageUri);
+
+
+                        if (isPose) {
+                            bitmapImg = BitmapFactory.decodeFile(path);
+                            if (img_pose != null) {
+                                img_pose.setImageBitmap(bitmapImg);
+                                Toast.makeText(getContext(), "Name pose path: " + nameImg, Toast.LENGTH_SHORT).show();
+                            }
+                        } else {
+                            Toast.makeText(getContext(), "Name Cloth path: " + nameImg, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+        );
+    }
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_editmanocanh,container,false);
-
+        return inflater.inflate(R.layout.fragment_editmanocanh, container, false);
     }
+
+    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        porfolio = view.findViewById(R.id.porfolio_icon);
-        chon_vay_ngan = view.findViewById(R.id.chon_vay_ngan);
-        chon_dang = view.findViewById(R.id.chon_dang);
-        chon_toc = view.findViewById(R.id.chon_toc);
-        chon_vay_dai = view.findViewById(R.id.chon_vay_dai);
-        chon_ao = view.findViewById(R.id.chon_ao);
-        chon_quan = view.findViewById(R.id.chon_quan);
-        chon_giay = view.findViewById(R.id.chon_giay);
-        chon_kinh = view.findViewById(R.id.chon_kinh);
-        chon_tui = view.findViewById(R.id.chon_tui);
-        chon_khuyen_tai = view.findViewById(R.id.chon_khuyen_tai);
+        img_pose = view.findViewById(R.id.img_pose);
+        btn_pose = view.findViewById(R.id.post_pose_layout);
+        btn_cloth = view.findViewById(R.id.post_cloth_layout);
+        loading = view.findViewById(R.id.loading);
 
-        navModel = view.findViewById(R.id.nav_model);
+        loading.setVisibility(INVISIBLE);
 
-        helper.setTouchEffect(porfolio);
-        helper.setTouchEffect(chon_vay_ngan);
-        helper.setTouchEffect(chon_dang);
-        helper.setTouchEffect(chon_toc);
-        helper.setTouchEffect(chon_vay_dai);
-        helper.setTouchEffect(chon_ao);
-        helper.setTouchEffect(chon_quan);
-        helper.setTouchEffect(chon_giay);
-        helper.setTouchEffect(chon_kinh);
-        helper.setTouchEffect(chon_tui);
-        helper.setTouchEffect(chon_khuyen_tai);
-        helper.setTouchEffect(navModel);
+        btn_pose.setOnClickListener(v -> {
+            isPose = true;
+            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+            intent.setType("image/*");
+            resultLauncher.launch(intent);
+        });
 
-        porfolio.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity() , UserPorfolio.class);
-                startActivity(intent);
-            }
+        btn_cloth.setOnClickListener(v -> {
+            isPose = false;
+            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+            intent.setType("image/*");
+            resultLauncher.launch(intent);
         });
     }
-
 }

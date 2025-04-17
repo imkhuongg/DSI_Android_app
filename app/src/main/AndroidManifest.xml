@@ -1,52 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:requestLegacyExternalStorage="true"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DSIdemo"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-
+        <activity
+            android:name=".SettingActivity"
+            android:exported="false" />
         <activity
             android:name=".views.SplashScreenActivity"
-            android:windowSoftInputMode="adjustPan"
-            android:exported="true">
+            android:exported="true"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".views.authenticate.LoginActivity"  android:windowSoftInputMode="adjustPan" android:exported="false" />
-        <activity android:name=".views.termActivity"  android:windowSoftInputMode="adjustPan" android:exported="false" />
-        <activity android:name=".views.MainScreen.MainScreen" android:exported="false"  android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".views.authenticate.SignUpAvtivity"  android:windowSoftInputMode="adjustPan" android:exported="false" />
-        <activity android:name=".views.MainScreen.profiles.UserPorfolio"  android:windowSoftInputMode="adjustPan" android:exported="false"/>
-        <activity android:name=".views.MainScreen.profiles.settingActivity"  android:windowSoftInputMode="adjustPan" android:exported="false"/>
-        <activity android:name=".views.MainScreen.Shop.ProductDetailActivity"  android:windowSoftInputMode="adjustPan" android:exported="false"/>
-        <activity android:name=".views.MainScreen.shopManage.ShopManage"  android:windowSoftInputMode="adjustPan" android:exported="false"/>
-        <activity android:name=".views.MainScreen.shopManage.addProduct"  android:windowSoftInputMode="adjustPan" android:exported="false"/>
-        <activity android:name=".views.MainScreen.shopManage.itemProductDetailManage"  android:windowSoftInputMode="adjustPan" android:exported="false" />
-        <activity android:name=".views.MainScreen.shopManage.updateProductActivity"  android:windowSoftInputMode="adjustPan" android:exported="false"/>
-        <activity android:name=".views.MainScreen.shopManage.ShopProfile"  android:windowSoftInputMode="adjustPan" android:exported="false"/>
-        <activity android:name=".views.MainScreen.shopManage.EditShopProfile.EditAdressShopActivity"  android:windowSoftInputMode="adjustPan" android:exported="false"/>
-        <activity android:name=".views.MainScreen.shopManage.EditShopProfile.EditEmailShopActivity"  android:windowSoftInputMode="adjustPan" android:exported="false"/>
-        <activity android:name=".views.MainScreen.shopManage.EditShopProfile.EditNameShopActivity"  android:windowSoftInputMode="adjustPan" android:exported="false"/>
-        <activity android:name=".views.MainScreen.shopManage.EditShopProfile.EditPhoneShopActivity" android:exported="false"/>
-        <activity android:name=".views.MainScreen.shopManage.NewShopperActivity"  android:windowSoftInputMode="adjustPan" android:exported="false" />
-        <activity android:name=".views.MainScreen.shopManage.addShopperActivity"  android:windowSoftInputMode="adjustPan" android:exported="false"/>
-        <activity android:name=".views.MainScreen.shopManage.AddShopperAvatarActivity"  android:windowSoftInputMode="adjustPan" android:exported="false"/>
-        <activity android:name=".views.MainScreen.shopManage.Searchs.SearchProductActivity"  android:windowSoftInputMode="adjustPan" android:exported="false"/>
-        <activity android:name=".views.MainScreen.shopManage.Searchs.ResultsSearchActivity"  android:windowSoftInputMode="adjustPan" android:exported="false"/>
+        <activity
+            android:name=".views.authenticate.LoginActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".views.termActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".views.MainScreen.MainScreen"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".views.authenticate.SignUpAvtivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".views.MainScreen.profiles.UserPorfolio"
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".views.MainScreen.profiles.settingActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".views.MainScreen.Shop.ProductDetailActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".views.MainScreen.shopManage.ShopManage"
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".views.MainScreen.shopManage.addProduct"
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".views.MainScreen.shopManage.itemProductDetailManage"
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".views.MainScreen.shopManage.updateProductActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".views.MainScreen.shopManage.ShopProfile"
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".views.MainScreen.shopManage.EditShopProfile.EditAdressShopActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".views.MainScreen.shopManage.EditShopProfile.EditEmailShopActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".views.MainScreen.shopManage.EditShopProfile.EditNameShopActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".views.MainScreen.shopManage.EditShopProfile.EditPhoneShopActivity"
+            android:exported="false" />
+        <activity
+            android:name=".views.MainScreen.shopManage.NewShopperActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".views.MainScreen.shopManage.addShopperActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".views.MainScreen.shopManage.AddShopperAvatarActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".views.MainScreen.shopManage.Searchs.SearchProductActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".views.MainScreen.shopManage.Searchs.ResultsSearchActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan" />
     </application>
 
 </manifest>
